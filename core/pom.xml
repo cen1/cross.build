@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>build.cross</groupId>
+	<artifactId>cross-build</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<modules>
+		<module>models</module>
+		<module>services</module>
+		<module>jenkins</module>
+		<module>ear</module>
+		<module>rest</module>
+		<module>utils</module>
+	</modules>
+	<packaging>pom</packaging>
+
+	<name>Cross.Build</name>
+
+	<inceptionYear>2016</inceptionYear>
+	<description>
+        Cross platform CI based on Jenkins, containers and cloud.
+    </description>
+
+	<url>http://cross.build</url>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<developers>
+		<developer>
+			<name>Klemen Ferjancic</name>
+			<id>cen1</id>
+			<email>imbacen@gmail.com</email>
+			<url>https://github.com/cen1</url>
+		</developer>
+	</developers>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>build.cross</groupId>
+				<artifactId>cross-build-models</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>build.cross</groupId>
+				<artifactId>cross-build-services</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>ejb</type>
+			</dependency>
+			<dependency>
+				<groupId>build.cross</groupId>
+				<artifactId>cross-build-jenkins-mediation</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>ejb</type>
+			</dependency>
+			<dependency>
+				<groupId>build.cross</groupId>
+				<artifactId>cross-build-utils</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>build.cross</groupId>
+				<artifactId>cross-build-rest</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>war</type>
+			</dependency>
+			<dependency>
+				<groupId>build.cross</groupId>
+				<artifactId>cross-build-ear</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>ear</type>
+			</dependency>
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>7.0</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-wildfly</artifactId>
+				<version>9.0.1.Final</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxrs</artifactId>
+				<version>3.0.14.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.keycloak</groupId>
+				<artifactId>keycloak-wildfly-adapter</artifactId>
+				<version>1.7.0.Final</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.github.tfaga.lynx</groupId>
+				<artifactId>lynx-core</artifactId>
+				<version>1.0.0-beta.2-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.jclouds</groupId>
+				<artifactId>jclouds-all</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds</groupId>
+				<artifactId>jclouds-compute</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds</groupId>
+				<artifactId>jclouds-allcompute</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds</groupId>
+				<artifactId>jclouds-core</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds.provider</groupId>
+				<artifactId>aws-ec2</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds.provider</groupId>
+				<artifactId>aws-cloudwatch</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds.driver</groupId>
+				<artifactId>jclouds-sshj</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds.driver</groupId>
+				<artifactId>jclouds-enterprise</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jclouds.api</groupId>
+				<artifactId>cloudwatch</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.jclouds.driver</groupId>
+				<artifactId>jclouds-slf4j</artifactId>
+				<version>1.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.1.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.thetransactioncompany</groupId>
+				<artifactId>cors-filter</artifactId>
+				<version>2.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>9.4-1206-jdbc42</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.10</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20160212</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>19.0</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jackson-provider</artifactId>
+				<version>3.0.16.Final</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<ejbVersion>3.2</ejbVersion>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

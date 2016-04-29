@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>build.cross</groupId>
+    <artifactId>cross-build</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>cross-build-services</artifactId>
+  <packaging>ejb</packaging>
+  
+  <dependencies>
+  	<dependency>
+		<groupId>javax</groupId>
+		<artifactId>javaee-api</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+		<groupId>org.jboss.resteasy</groupId>
+		<artifactId>resteasy-jaxrs</artifactId>
+		<scope>provided</scope>
+	</dependency>	
+  	 
+  	<dependency>
+      <groupId>org.apache.jclouds</groupId>
+      <artifactId>jclouds-compute</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.jclouds</groupId>
+      <artifactId>jclouds-allcompute</artifactId>
+    </dependency>
+    <dependency>
+		<groupId>org.apache.jclouds.provider</groupId>
+		<artifactId>aws-ec2</artifactId>
+	</dependency>
+    <dependency>
+		<groupId>org.apache.jclouds.provider</groupId>
+		<artifactId>aws-cloudwatch</artifactId>
+	</dependency>
+    <dependency>
+      <groupId>org.apache.jclouds.driver</groupId>
+      <artifactId>jclouds-sshj</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.jclouds.driver</groupId>
+      <artifactId>jclouds-enterprise</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.jclouds</groupId>
+      <artifactId>jclouds-core</artifactId>
+    </dependency>
+    
+    <!--
+    <dependency>
+	    <groupId>org.apache.jclouds.driver</groupId>
+	    <artifactId>jclouds-slf4j</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-classic</artifactId>
+	</dependency>
+	--> 
+    
+    <dependency>
+		<groupId>org.jboss.ejb3</groupId>
+		<artifactId>jboss-ejb3-ext-api</artifactId>
+		<version>2.2.0.Final</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>build.cross</groupId>
+		<artifactId>cross-build-models</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>build.cross</groupId>
+		<artifactId>cross-build-jenkins-mediation</artifactId>
+		<type>ejb</type>
+		<scope>provided</scope>
+	</dependency>
+    <dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.json</groupId>
+		<artifactId>json</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+	</dependency>
+    
+  </dependencies>
+</project>

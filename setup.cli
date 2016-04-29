@@ -1,0 +1,60 @@
+#Setup wildfly for cross.build
+#Stock standalone-full.xml required
+connect
+batch
+
+# Add postgresql JDBC driver
+/subsystem=datasources/jdbc-driver=postgresql:add( \
+    driver-name=postgresql, \
+    driver-module-name=org.postgresql, \
+    driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource \
+)
+ 
+# Add a non-XA datasource for crossbuild
+data-source add \
+    --name=CrossBuildDS \
+    --jta=false \
+    --driver-name=postgresql \
+    --connection-url=jdbc:postgresql://${POSTGRESQL_ADDR}:${POSTGRESQL_PORT}/crossbuild \
+    --jndi-name=java:jboss/datasources/CrossBuildDS \
+    --user-name=${POSTGRESQL_USER} \
+    --password=${POSTGRESQL_PASSWORD} \
+    --check-valid-connection-sql="SELECT 1" \
+    --validate-on-match=false \
+    --background-validation=false \
+    --use-fast-fail=true
+data-source enable --name=CrossBuildDS
+
+# Add a non-XA datasource for Keycloak
+data-source add \
+    --name=KeycloakDS \
+    --jta=false \
+    --driver-name=postgresql \
+    --connection-url=jdbc:postgresql://${POSTGRESQL_ADDR}:${POSTGRESQL_PORT}/keycloak \
+    --jndi-name=java:jboss/datasources/KeycloakDS \
+    --user-name=${POSTGRESQL_USER} \
+    --password=${POSTGRESQL_PASSWORD} \
+    --check-valid-connection-sql="SELECT 1" \
+    --validate-on-match=false \
+    --background-validation=false \
+    --use-fast-fail=true
+data-source enable --name=KeycloakDS
+
+#Add system properties
+/system-property=CLOUD_PROVIDER:add(value=${CLOUD_PROVIDER})
+/system-property=CLOUD_IDENTITY:add(value=${CLOUD_IDENTITY})
+/system-property=CLOUD_CREDENTIALS:add(value=${CLOUD_CREDENTIALS})
+/system-property=CLOUD_REGION:add(value=${CLOUD_REGION})
+/system-property=CLOUD_INSTANCE_TYPE:add(value=${CLOUD_INSTANCE_TYPE})
+/system-property=CROSSBUILD_SECURITY_GROUP:add(value=${CROSSBUILD_SECURITY_GROUP})
+/system-property=JENKINS_API:add(value=${JENKINS_API})
+/system-property=JENKINS_PASSWORD:add(value=${JENKINS_PASSWORD})
+/system-property=JENKINS_EMAIL:add(value=${JENKINS_EMAIL})
+
+#Bind to all interfaces
+/interface=public/:write-attribute(name=inet-address,value=0.0.0.0)
+/interface=management/:write-attribute(name=inet-address,value=0.0.0.0)
+
+# Execute and reload
+run-batch
+:reload

@@ -1,0 +1,97 @@
+{
+	"useSecurity": {
+		"slaveAgentPort": {
+			"type": "fixed",
+			"value": "50000"
+		},
+		"disableRememberMe": true,
+		"realm": {
+			"value": "1",
+			"stapler-class": "hudson.security.HudsonPrivateSecurityRealm",
+			"$class": "hudson.security.HudsonPrivateSecurityRealm",
+			"allowsSignup": false
+		},
+		"authorization": {
+			"value": "3",
+			"stapler-class": "hudson.security.GlobalMatrixAuthorizationStrategy",
+			"$class": "hudson.security.GlobalMatrixAuthorizationStrategy",
+			"data": {
+				"anonymous": {
+					"hudson.model.Hudson.Administer": false,
+					"hudson.model.Hudson.ConfigureUpdateCenter": false,
+					"hudson.model.Hudson.Read": false,
+					"hudson.model.Hudson.RunScripts": false,
+					"hudson.model.Hudson.UploadPlugins": false,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.Create": false,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.Delete": false,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains": false,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.Update": false,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.View": false,
+					"hudson.model.Computer.Build": false,
+					"hudson.model.Computer.Configure": false,
+					"hudson.model.Computer.Connect": false,
+					"hudson.model.Computer.Create": false,
+					"hudson.model.Computer.Delete": false,
+					"hudson.model.Computer.Disconnect": false,
+					"hudson.model.Item.Build": false,
+					"hudson.model.Item.Cancel": false,
+					"hudson.model.Item.Configure": false,
+					"hudson.model.Item.Create": false,
+					"hudson.model.Item.Delete": false,
+					"hudson.model.Item.Discover": false,
+					"hudson.model.Item.Read": false,
+					"hudson.model.Item.Workspace": false,
+					"hudson.model.Run.Delete": false,
+					"hudson.model.Run.Update": false,
+					"hudson.model.View.Configure": false,
+					"hudson.model.View.Create": false,
+					"hudson.model.View.Delete": false,
+					"hudson.model.View.Read": false
+				},
+				"admin": {
+					"hudson.model.Hudson.Administer": true,
+					"hudson.model.Hudson.ConfigureUpdateCenter": true,
+					"hudson.model.Hudson.Read": true,
+					"hudson.model.Hudson.RunScripts": true,
+					"hudson.model.Hudson.UploadPlugins": true,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.Create": true,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.Delete": true,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains": true,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.Update": true,
+					"com.cloudbees.plugins.credentials.CredentialsProvider.View": true,
+					"hudson.model.Computer.Build": true,
+					"hudson.model.Computer.Configure": true,
+					"hudson.model.Computer.Connect": true,
+					"hudson.model.Computer.Create": true,
+					"hudson.model.Computer.Delete": true,
+					"hudson.model.Computer.Disconnect": true,
+					"hudson.model.Item.Build": true,
+					"hudson.model.Item.Cancel": true,
+					"hudson.model.Item.Configure": true,
+					"hudson.model.Item.Create": true,
+					"hudson.model.Item.Delete": true,
+					"hudson.model.Item.Discover": true,
+					"hudson.model.Item.Read": true,
+					"hudson.model.Item.Workspace": true,
+					"hudson.model.Run.Delete": true,
+					"hudson.model.Run.Update": true,
+					"hudson.model.View.Configure": true,
+					"hudson.model.View.Create": true,
+					"hudson.model.View.Delete": true,
+					"hudson.model.View.Read": true
+				}
+			},
+			"": "admin"
+		}
+	},
+	"": "0",
+	"markupFormatter": {
+		"stapler-class": "hudson.markup.EscapedMarkupFormatter",
+		"$class": "hudson.markup.EscapedMarkupFormatter"
+	},
+	"hudson-security-csrf-GlobalCrumbIssuerConfiguration": {},
+	"jenkins-model-DownloadSettings": {
+		"useBrowser": false
+	},
+	"core:apply": ""
+}

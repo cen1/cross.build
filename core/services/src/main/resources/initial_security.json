@@ -1,0 +1,30 @@
+{
+	"useSecurity": {
+		"slaveAgentPort": {
+			"type": "fixed",
+			"value": "50000"
+		},
+		"disableRememberMe": true,
+		"realm": {
+			"value": "1",
+			"stapler-class": "hudson.security.HudsonPrivateSecurityRealm",
+			"$class": "hudson.security.HudsonPrivateSecurityRealm",
+			"allowsSignup": true
+		},
+		"authorization": {
+			"value": "0",
+			"stapler-class": "hudson.security.AuthorizationStrategy$Unsecured",
+			"$class": "hudson.security.AuthorizationStrategy$Unsecured"
+		}
+	},
+	"": "0",
+	"markupFormatter": {
+		"stapler-class": "hudson.markup.EscapedMarkupFormatter",
+		"$class": "hudson.markup.EscapedMarkupFormatter"
+	},
+	"hudson-security-csrf-GlobalCrumbIssuerConfiguration": {},
+	"jenkins-model-DownloadSettings": {
+		"useBrowser": false
+	},
+	"core:apply": ""
+}

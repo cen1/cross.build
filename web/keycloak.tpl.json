@@ -1,0 +1,8 @@
+{
+  "realm": "crossbuild",
+  "realm-public-key": "<%- keycloak_key || 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxYziIK67DiJ7azjDygzlk/8T5lX2UZS+deLGP/2pGoqsF6s8/rtHM637uHwxRtzVmFQDS5LmqMfGrlL5kMKN5HzQoYaBVu+aDSHTxjraUn6TEGybODremrkWFscxlVWLr154DhCVtVJGUr3p9UXWrwDrPE1bfhEfYxKgwiQH7F0vs94UwTOqeKgSCeNz1i1YVhIjvoUj1OEqtuwLSHUBRFdD9Nrt+iEJEWojDqSr1R8ful7LpJREFYY9yfqPg0+prD2lIrkwMSmmZprIQ+Qw0yFNGJA6Gx2CvI7KIqe7gNi3YMaVIrJOSmBtnTcTW3ISpAAk0C+TILpt6F2o0DN6awIDAQAB' %>",
+  "auth-server-url": "<%- keycloak  || 'http://localhost:8080/auth' %>",
+  "ssl-required": "none",
+  "resource": "crossbuild",
+  "public-client": true
+}

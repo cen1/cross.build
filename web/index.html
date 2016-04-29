@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>cross.build</title>
+    <meta name="description"
+          content="Cross platform CI.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="<%- root  || '/' %>">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/scripts/theme/base.css">
+    
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    
+    <link rel="stylesheet" href="/scripts/angular-ui-notification/style.css">
+    
+    <!-- build:css styles/loading.css -->
+    <link rel="stylesheet" type="text/css" href="scripts/routes/_loading.css">
+    <!-- endbuild -->
+    <![if gt IE 9]>
+    <!-- build:css(.tmp) styles/layout.css -->
+    <link rel="stylesheet" type="text/css"  href="scripts/routes/layout.css">
+    <!-- endbuild -->
+    <![endif]>
+
+    <script src="scripts/app.js" async></script>
+</head>
+<body class="static-header sidebar-default navbar-midnightblue layout-horizontal">
+
+<div id="splash">
+    <div class="splash-title">
+        <!--<img src="images/grb-color.svg" alt="">-->
+
+        <div class="la-cog la-dark">
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<main id="wrapper" ui-view></main>
+
+</body>
+</html>

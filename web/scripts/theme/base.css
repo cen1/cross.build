@@ -1,0 +1,72 @@
+/* GLOBAL */
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.glyphicon-refresh-animate {
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+/* HEADER */
+#header-panel {
+	background-color: #3BB9FF;
+	height: 40px;
+	margin-bottom: 10px;
+}
+
+#header-panel div {
+	height: 40px;
+	line-height: 40px;
+}
+
+#footer-panel {
+	border-top: 2px solid;
+	position:fixed;
+	bottom:0;
+	width: 100%;
+}
+
+.github {
+	background-image: url('images/github.png'),
+}
+
+/* VMCARD */
+.vmcard-lcol {
+    text-align: right;
+}
+
+.vmcard-icon {
+    height: 25px;
+    width: 25px;
+}
+
+.vmcard-table td {
+    padding: 3px;    
+}
+
+.vmcard {
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+.FreeBSD {
+    background-color: #E77471;
+    color: white;
+    font-weight: bold;
+}
+
+.Ubuntu {
+    background-color: #F9966B;
+    color: white;
+    font-weight: bold;
+}
+
+.c3 svg {
+	font-size: 8px
+}

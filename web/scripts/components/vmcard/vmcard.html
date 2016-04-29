@@ -1,0 +1,50 @@
+<div class="vmcard">
+    <table class="vmcard-table">
+        <tr>
+            <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Os:</td>
+            <td>{{vm.vmSetting.platform.name}} {{vm.vmSetting.platform.version}} <img ng-src="/images/{{vm.vmSetting.platform.name}}.png" class="vmcard-icon"/></td>
+        </tr>
+        <tr>
+            <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Kernel:</td>
+            <td>{{vm.vmSetting.platform.kernel}} <img ng-src="/images/{{vm.vmSetting.platform.kernel}}.png" class="vmcard-icon"/></td>
+        </tr>
+        <tr>
+            <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Arch:</td>
+            <td><span class="label label-info">{{vm.vmSetting.platform.arch}}</span></td>
+        </tr>
+        <tr>
+            <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Image id:</td>
+            <td><span class="label label-info">{{vm.vmSetting.amiId}}</span></td>
+        </tr>
+        <tr>
+            <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Identifier:</td>
+            <td><span style="color: grey; font-style: italic">{{vm.id}}</span></td>
+        </tr>
+        <tr>
+            <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Provider:</td>
+            <td>{{vm.vmSetting.provider}} <img ng-src="/images/{{vm.vmSetting.provider}}.png" class="vmcard-icon"/></td>
+        </tr>
+        <tr>
+            <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">&nbsp</td>
+            <td><button type="button" class="btn btn-default" ng-click="toggleLoad()">Show Load History</button></td>
+        </tr>
+        <tr ng-show="showLoad">
+            <td class="vmcard-lcol">CPU:</td>
+            <td>
+                <div id="{{safeIdCPU}}"></div>                
+            </td>
+        </tr>
+        <tr ng-show="showLoad">
+            <td class="vmcard-lcol">MEMORY:</td>
+            <td>
+                <div id="{{safeIdMEMORY}}"></div>                
+            </td>
+        </tr>
+        <tr ng-show="showLoad">
+            <td class="vmcard-lcol">DISK:</td>
+            <td>
+                <div id="{{safeIdDISK}}"></div>                
+            </td>
+        </tr>
+    </table>
+<div>

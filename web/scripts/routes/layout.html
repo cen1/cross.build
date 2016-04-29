@@ -1,0 +1,17 @@
+<layout-header on-login="login" on-logout="logout" ></layout-header>
+
+<!--<menu-horizontal></menu-horizontal>-->
+
+<div id="page-heading">
+    <breadcrumbs></breadcrumbs>
+
+    <h1 ng-show="$state.current.longTitle">
+        <i class="fa-fw fa {{ $state.current.icon }}"></i> {{ $state.current.longTitle }}
+    </h1>
+</div>
+
+<div id="wrap">
+    <div class="container-fluid" ui-view></div>
+</div>
+
+<layout-footer></layout-footer>

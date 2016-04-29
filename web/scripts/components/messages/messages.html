@@ -1,0 +1,9 @@
+<div class="help-block" ng-messages="form.$error" ng-show="form.$dirty || options.showAlways" >
+	<p ng-message="email" class="text-danger">Bad email format</p>
+	<p ng-message="minlength" class="text-danger">Too short</p>
+	<p ng-message="maxlength" class="text-danger">Too long</p>
+	<p ng-message="number" class="text-danger">Not a number</p>
+	<p ng-message="date" class="text-danger">Wrong date format</p>
+	<p ng-message="pattern" class="text-danger">Wrong pattern</p>
+	<p ng-message="required" ng-if="options.showRequired" class="text-danger">Required</p>
+</div>

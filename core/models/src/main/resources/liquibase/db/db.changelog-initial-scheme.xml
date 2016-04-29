@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+	<changeSet author="Klemen" id="setup_pg_extentions" failOnError="false">
+	      <sql dbms="postgresql"
+	           endDelimiter="\nGO"
+	           splitStatements="true"
+	           stripComments="true">
+	          CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+	
+	          CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+	      </sql>
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_container">
+	  
+	   <createTable tableName="containers">
+	     <column name="name" type="varchar(255)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="ip" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="port" type="integer">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="vm_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="project_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="keypair_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable> 
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_keypairs">
+	  
+	   <createTable tableName="keypairs">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="name" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="priv_material" type="TEXT">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="pub_material" type="TEXT">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable> 
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_load_history">
+	  
+	   <createTable tableName="load_history">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="type" type="varchar(10)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="value" type="double">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="vm_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable> 
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_platform">
+	  
+	   <createTable tableName="platforms">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="name" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="kernel" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="arch" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	      <column name="version" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>	     
+	   </createTable> 
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_project_groups">
+	   <createTable tableName="project_groups">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="name" type="varchar(255)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="repository" type="varchar(2048)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="user_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable> 
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_projects">
+	   <createTable tableName="projects">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="build_command" type="text">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="vm_setting_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="project_group_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable> 
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_users">
+	   <createTable tableName="users">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable>
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_vms">
+	   <createTable tableName="vms">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="provider" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="cloud_id" type="varchar(255)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="group_name" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="ip" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="keypair_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="vm_setting_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable>
+	</changeSet>
+	
+	<changeSet author="Klemen" id="create_vm_settings">
+	   <createTable tableName="vm_settings">
+	     <column name="id" type="varchar(36)" defaultValueComputed="gen_random_uuid()">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="group_name" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="provider" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="bootstrap_upload_path" type="varchar(255)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="login_user" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="bootstrap_exec_cmd" type="varchar(2048)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="ami_id" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="bootstrap_as_sudo" type="boolean">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="container_file" type="varchar(45)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="create_container_cmd" type="varchar(2048)">
+	       <constraints nullable="false"/>
+	     </column>
+	     <column name="platform_id" type="varchar(36)">
+	       <constraints nullable="false"/>
+	     </column>
+	   </createTable>
+	</changeSet>
+	
+	<changeSet author="Klemen" id="add_primary_keys">
+		<addPrimaryKey columnNames="project_id"
+            constraintName="pk_containers" tableName="containers"/>
+		<addPrimaryKey columnNames="id"
+            constraintName="pk_keypairs" tableName="keypairs"/>
+        <addPrimaryKey columnNames="id"
+        	constraintName="pk_load_history" tableName="load_history"/>
+        <addPrimaryKey columnNames="id"
+        	constraintName="pk_platforms" tableName="platforms"/>
+        <addPrimaryKey columnNames="id"
+        	constraintName="pk_projects" tableName="projects"/>
+        <addPrimaryKey columnNames="id"
+        	constraintName="pk_project_groups" tableName="project_groups"/>
+        <addPrimaryKey columnNames="id"
+        	constraintName="pk_user" tableName="users"/>
+        <addPrimaryKey columnNames="id"
+        	constraintName="pk_vms" tableName="vms"/>
+        <addPrimaryKey columnNames="id"
+        	constraintName="pk_vm_settings" tableName="vm_settings"/>
+    </changeSet>
+    
+    <changeSet author="Klemen" id="add_foreign_keys">
+    	<addForeignKeyConstraint baseColumnNames="vm_id"
+			baseTableName="containers" constraintName="fk_containers_vms"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="vms" />
+		<addForeignKeyConstraint baseColumnNames="project_id"
+			baseTableName="containers" constraintName="fk_containers_projects"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="projects" />
+		<addForeignKeyConstraint baseColumnNames="keypair_id"
+			baseTableName="containers" constraintName="fk_containers_keypairs"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="keypairs" />
+			
+		<addForeignKeyConstraint baseColumnNames="vm_id"
+			baseTableName="load_history" constraintName="fk_load_history_vms"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="vms" />
+		
+		<addForeignKeyConstraint baseColumnNames="user_id"
+			baseTableName="project_groups" constraintName="fk_project_groups_users"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="users" />
+		
+		<addForeignKeyConstraint baseColumnNames="vm_setting_id"
+			baseTableName="projects" constraintName="fk_project_vmsettings"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="vm_settings" />
+		<addForeignKeyConstraint baseColumnNames="project_group_id"
+			baseTableName="projects" constraintName="fk_project_project_group"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="project_groups" />
+			
+		<addForeignKeyConstraint baseColumnNames="keypair_id"
+			baseTableName="vms" constraintName="fk_vms_keypairs"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="keypairs" />
+		<addForeignKeyConstraint baseColumnNames="vm_setting_id"
+			baseTableName="vms" constraintName="fk_vms_vm_settings"
+			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="vm_settings" />
+		
+    </changeSet>
+    
+    <changeSet author="Klemen" id="add_unique_constraints">
+    	<addUniqueConstraint columnNames="name"
+            constraintName="keypair_name_unique"
+            tableName="keypairs" />
+        <addUniqueConstraint columnNames="name, user_id"
+            constraintName="project_group_name"
+            tableName="project_groups" />
+        <addUniqueConstraint columnNames="name"
+            constraintName="container_name"
+            tableName="containers" />
+    </changeSet>
+	
+</databaseChangeLog>

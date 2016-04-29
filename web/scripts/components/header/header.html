@@ -1,0 +1,43 @@
+<header id="header-panel">
+
+  <div class="row">
+    <div class="pull-left col-xs-3">
+      <a ui-sref="layout.home">
+          <h4>CROSS.BUILD</h4>
+      </a>
+    </div>
+    
+    <div class="col-xs-6 text-center">
+      <p style="vertical-align: middle">Cross platform CI.</p>
+    </div>
+  
+    <div class="pull-right col-xs-3">
+      <div class="pull-right">
+        <span ng-show="auth.authenticated">
+            <span>Logged in as </span>
+            <span ng-bind="username"></span>
+        </span>
+        <a href="https://github.com/cen1/cross.build" target="_blank" title="Cross.Build GitHub">
+          <img src="images/github.png" style="width: 30px; height: 30px" />
+        </a>
+        <button type="button" class="btn btn-default" aria-label="Left Align" ui-sref="layout.status" title="System status">
+          <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" aria-label="Left Align" ui-sref="layout.addnew" ng-show="auth.authenticated" title="Add new project">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" aria-label="Left Align" ui-sref="layout.myprojects" ng-show="auth.authenticated" title="My projects">
+          <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+        </button>
+        <button ng-show="!auth.authenticated" ng-click="onLogin()" type="button" class="btn btn-default" aria-label="Left Align" 
+           title="Login">
+          <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+        </button>
+        <button ng-show="auth.authenticated" ng-click="onLogout()" type="button" class="btn btn-default" aria-label="Left Align" 
+            style="color: orange" title="Logout">
+          <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

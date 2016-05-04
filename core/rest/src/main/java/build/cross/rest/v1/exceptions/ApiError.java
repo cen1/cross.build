@@ -1,8 +1,12 @@
-package build.cross.rest.exceptions;
+package build.cross.rest.v1.exceptions;
 
-public class ApiError {
+import java.io.Serializable;
 
-    protected Integer status;
+public class ApiError implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	protected Integer status;
     protected String code;
     protected String description;
     protected String moreInfo;

@@ -6,26 +6,26 @@
         </span>
         <div class="btn-group-vertical" style="width: 100%">
             <button ng-repeat="project in myprojects" type="button" class="btn" style="width: 100%" 
-                ng-click="select(project)" ng-class="projectgroup.id==project.id ? 'btn-info' : 'btn-default'">{{ project.name }}</button>    
+                ng-click="select(project)" ng-class="selectedProjectGroup.id==project.id ? 'btn-info' : 'btn-default'">{{ project.name }}</button>    
         </div>
     </div>
     <div class="col-xs-8" style="padding-left: 1em; padding-right: 1em">
-        <div ng-if="projectgroup">
+        <div ng-if="selectedProjectGroup">
             <span class="label label-default" style="width: 100%; display: block">Project builds</span>
             <br />
             <div class="row">
                 <div ng-repeat="status in projectStatus" class="col-xs-6 vmcard">
-                    <buildhistory status="status" projectgroup="projectgroup">                   
+                    <buildhistory status="status" selected-project-group="selectedProjectGroup">                   
                 </div>
             </div>
             <br />
             <hr />
             <span class="label label-default" style="width: 100%; display: block">Configure project</span>
-            <form ng-submit="updateproject()" role="form">
+            <form ng-submit="updateProject()" role="form">
                 <div class="form-group">
                     <label for="addnew-repourl">Repository URL:</label>
-                    <input type="text" style="width: 400px" ng-model="projectgroup.repository" class="form-control" id="addnew-repourl"/>
-                    <div ng-repeat="project in projectgroup.projects">
+                    <input type="text" style="width: 400px" ng-model="selectedProjectGroup.repository" class="form-control" id="addnew-repourl"/>
+                    <div ng-repeat="project in selectedProjectGroup.projects">
                         <hr />
                         <ppcard project="project"></ppcard>
                     </div>
@@ -44,7 +44,7 @@
         <br />
     </div>
     <div class="col-xs-2">
-        <div ng-if="projectgroup">
+        <div ng-if="selectedProjectGroup">
             <span class="label label-default" style="width: 100%; display: block">Actions</span>
             <div class="btn-group-vertical" style="width: 100%">
                 <button type="button" class="btn btn-default" style="width: 100%" ng-click="delete()">Delete project</button>

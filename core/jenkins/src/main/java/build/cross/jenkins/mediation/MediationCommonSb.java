@@ -1,13 +1,9 @@
 package build.cross.jenkins.mediation;
 
-import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 
 @Stateless
 public class MediationCommonSb {

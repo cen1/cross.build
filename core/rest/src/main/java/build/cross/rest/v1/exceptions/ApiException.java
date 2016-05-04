@@ -1,4 +1,4 @@
-package build.cross.rest.exceptions;
+package build.cross.rest.v1.exceptions;
 
 public class ApiException extends Exception {
 

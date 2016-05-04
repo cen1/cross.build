@@ -3,7 +3,6 @@ package build.cross.rest.v1.interceptors;
 import java.security.Principal;
 import java.util.logging.Logger;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -13,9 +12,8 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import build.cross.models.jpa.User;
-import build.cross.rest.exceptions.ApiError;
-import build.cross.rest.exceptions.ApiException;
-import build.cross.services.rest.local.UserManagerSbLocal;
+import build.cross.rest.v1.exceptions.ApiError;
+import build.cross.rest.v1.exceptions.ApiException;
 
 @ValidatePermissions
 @Interceptor

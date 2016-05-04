@@ -8,7 +8,7 @@ export default subModule.directive('buildhistory', () => {
         restrict: 'E',
         replace: true,
         scope: {
-            projectgroup: '=',
+            selectedProjectGroup: '=',
             status: '='
         },
         template,
@@ -29,7 +29,7 @@ export default subModule.directive('buildhistory', () => {
                     $scope.selectedBuildJobs.set(build.number, !current);
                 }
                 
-                ProjectGroups.getBuildDetails($scope.projectgroup.id, $scope.status.name, build.number).success((data) => {
+                ProjectGroups.getBuildDetails($scope.selectedProjectGroup.id, $scope.status.name, build.number).success((data) => {
                     $scope.buildJobs.set(build.number, data);
                 });
             }
@@ -40,7 +40,7 @@ export default subModule.directive('buildhistory', () => {
                 }
                     var current = $scope.viewLog.get(build.number);
                     $scope.viewLog.set(build.number, !current);
-                ProjectGroups.getBuildConsole($scope.projectgroup.id, $scope.status.name, build.number).success((data) => {
+                ProjectGroups.getBuildConsole($scope.selectedProjectGroup.id, $scope.status.name, build.number).success((data) => {
                     $scope.buildConsole.set(build.number, data);
                 });
             }
@@ -51,7 +51,7 @@ export default subModule.directive('buildhistory', () => {
                 }
             }
             
-            $scope.initLast3();
+            $scope.initLast3();          
         }
     }
 });

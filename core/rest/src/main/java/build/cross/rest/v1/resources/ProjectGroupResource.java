@@ -1,43 +1,28 @@
 package build.cross.rest.v1.resources;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.EJB;
-import javax.ejb.TransactionAttribute;
 import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import build.cross.jenkins.mediation.NodeMediationSbLocal;
 import build.cross.jenkins.mediation.ProjectMediationSbLocal;
-import build.cross.jenkins.mediation.SecurityMediationSbLocal;
-import build.cross.models.jpa.Container;
 import build.cross.models.jpa.Project;
 import build.cross.models.jpa.ProjectGroup;
 import build.cross.models.jpa.User;
-import build.cross.models.jpa.VmSetting;
-import build.cross.rest.exceptions.ApiError;
-import build.cross.rest.exceptions.ApiException;
-import build.cross.rest.v1.beans.ProjectStatus;
+import build.cross.rest.v1.exceptions.ApiError;
+import build.cross.rest.v1.exceptions.ApiException;
 import build.cross.rest.v1.interceptors.ValidatePermissions;
-import build.cross.rest.v1.resources.common.CrudResource;
 import build.cross.rest.v1.resources.common.CrudUserResource;
 import build.cross.services.beans.ProjectSbLocal;
 import build.cross.services.cloud.containers.ContainerManagerSbLocal;
@@ -79,8 +64,35 @@ public class ProjectGroupResource extends CrudUserResource<ProjectGroup> {
 				throw new ApiException("Bad request", new ApiError(400, e.getMessage()));
 			}
 			em.persist(project);
-			jenkinsProjects.addProject(project);
 			jenkinsNodes.createNode(project.getContainer());
+			jenkinsProjects.addProject(project);
+			jenkinsProjects.configureProject(project);
+		}
+		
+		return Response.ok(projectGroup).build();
+    }
+	
+	@PUT
+	@Path("/{projectGroupId}")
+	@Transactional(rollbackOn = {Exception.class, RuntimeException.class})
+    public Response update(@PathParam(value="userId") String userId,
+    					   @PathParam(value="projectGroupId") String projectGroupId,
+    					   ProjectGroup projectGroup) throws ApiException {
+		
+		validateEntity(userId, projectGroupId);
+    	User t = em.find(User.class, userId);
+    	if (t == null) {
+            throw new ApiException(new ApiError(404, "resource.not.found", User.class.getSimpleName()+" "+userId));
+        }
+    	projectGroup.setUser(t);
+    	projectGroup.setId(projectGroupId);
+    	
+    	projectGroup=em.merge(projectGroup);
+		
+		for (Project project : projectGroup.getProjects()) {
+			project.setProjectGroup(projectGroup);
+			project=em.merge(project);
+			jenkinsProjects.configureProject(project);
 		}
 		
 		return Response.ok(projectGroup).build();

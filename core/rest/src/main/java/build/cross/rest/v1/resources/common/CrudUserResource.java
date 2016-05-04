@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -23,10 +22,9 @@ import com.github.tfaga.lynx.enums.FilterOperation;
 import com.github.tfaga.lynx.utils.JPAUtils;
 
 import build.cross.models.jpa.User;
-import build.cross.models.jpa.common.BaseEntity;
 import build.cross.models.jpa.common.BaseUserEntity;
-import build.cross.rest.exceptions.ApiError;
-import build.cross.rest.exceptions.ApiException;
+import build.cross.rest.v1.exceptions.ApiError;
+import build.cross.rest.v1.exceptions.ApiException;
 
 import static build.cross.rest.v1.application.CrossBuildRest.queryDefaults;
 

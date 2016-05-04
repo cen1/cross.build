@@ -8,25 +8,26 @@ export default subModule.directive('myprojects', () => {
         restrict: 'E',
         replace: true,
         scope: {
-            myprojects: '='        
+            myprojects: '=',
+            updateProject: '=',
+            selectedProjectGroup: '='      
         },
         template,
         controller: /*@ngInject*/ ($scope, ProjectGroups, $location) => {
             
-            $scope.projectgroup = null;
             $scope.projectStatus = [];
             
             $scope.select = (pg) => {
+                $scope.selectedProjectGroup = pg;
                 $scope.projectStatus = [];
-                $scope.projectgroup = pg;
                 $location.search("pgid", pg.id);
                 
-                for (var i = 0; i < $scope.projectgroup.projects.length; i++) {
+                for (var i = 0; i < $scope.selectedProjectGroup.projects.length; i++) {
                     
-                    ProjectGroups.getStatus(pg.id, $scope.projectgroup.projects[i].id).success((data) => {
-                        for (var j = 0; j < $scope.projectgroup.projects.length; j++) {
-                            if (data.name==$scope.projectgroup.projects[j].id) {
-                                data.project = $scope.projectgroup.projects[j];
+                    ProjectGroups.getStatus(pg.id, $scope.selectedProjectGroup.projects[i].id).success((data) => {
+                        for (var j = 0; j < $scope.selectedProjectGroup.projects.length; j++) {
+                            if (data.name==$scope.selectedProjectGroup.projects[j].id) {
+                                data.project = $scope.selectedProjectGroup.projects[j];
                                 $scope.projectStatus.push(data);
                             }   
                         }

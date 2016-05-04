@@ -3,7 +3,6 @@ package build.cross.models.jpa;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Table(name="containers")
 @Entity
@@ -28,6 +28,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 	@NamedQuery(name="Container.findLatest", query="SELECT c FROM Container c WHERE c.vm.id=:vmId ORDER BY c.createdAt DESC"),
 	@NamedQuery(name="Container.findByName", query="SELECT c FROM Container c WHERE c.name=:name")
 })
+@JsonIgnoreProperties({"ip", "port", "vm", "keyPair"})
 public class Container implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

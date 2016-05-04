@@ -20,8 +20,8 @@ import com.github.tfaga.lynx.beans.QueryParameters;
 import com.github.tfaga.lynx.utils.JPAUtils;
 
 import build.cross.models.jpa.common.BaseEntity;
-import build.cross.rest.exceptions.ApiError;
-import build.cross.rest.exceptions.ApiException;
+import build.cross.rest.v1.exceptions.ApiError;
+import build.cross.rest.v1.exceptions.ApiException;
 
 import static build.cross.rest.v1.application.CrossBuildRest.queryDefaults;
 

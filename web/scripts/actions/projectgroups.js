@@ -12,6 +12,9 @@ export default subModule.factory('ProjectGroups', /*@ngInject*/ ($http) => {
         addnew(data = {}, config = {}) {
             return $http.post(api + source, data, config);
         },
+        update(data = {}, config = {}) {
+            return $http.put(api + source + "/"+data.id, data, config);
+        },
         get() {
             return $http.get(api+source);
         },

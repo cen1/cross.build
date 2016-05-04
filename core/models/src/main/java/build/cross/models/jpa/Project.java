@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import build.cross.models.jpa.common.BaseEntity;
 
@@ -28,8 +29,7 @@ public class Project extends BaseEntity implements Serializable {
 	@JoinColumn(name="vm_setting_id")
 	private VmSetting vmSetting;
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy = "project")
-	@JsonIgnore
+	@OneToOne(cascade=CascadeType.PERSIST, mappedBy = "project", fetch=FetchType.EAGER)
 	private Container container;
 	
 	@ManyToOne

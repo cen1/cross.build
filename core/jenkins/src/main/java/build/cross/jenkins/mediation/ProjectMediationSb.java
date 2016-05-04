@@ -248,4 +248,46 @@ public class ProjectMediationSb extends MediationCommonSb implements ProjectMedi
 		
 		return response;
 	}
+	
+	@Override
+	public Response getProjectInfo(String projectId) {
+		Client client = ClientBuilder.newClient();
+		WebTarget wt = client.target(jenkinsApi);
+		
+		Response response = wt.path("/job/"+projectId+"/api/json")
+				.request(MediaType.APPLICATION_JSON)
+				.header("Authorization", authorizationHeaderValue)
+		    	.get(); //.queryParam("pretty", "true")
+		
+		logger.info("Response from jenkins: "+response.getStatus());
+		return response;
+	}
+	
+	@Override
+	public Response getBuildDetails(String projectId, String buildNumber) {
+		Client client = ClientBuilder.newClient();
+		WebTarget wt = client.target(jenkinsApi);
+		
+		Response response = wt.path("/job/"+projectId+"/"+buildNumber+"/api/json")
+				.request(MediaType.APPLICATION_JSON)
+				.header("Authorization", authorizationHeaderValue)
+		    	.get(); //.queryParam("pretty", "true")
+		
+		logger.info("Response from jenkins: "+response.getStatus());
+		return response;
+	}
+	
+	@Override
+	public Response getBuildConsoleText(String projectId, String buildNumber) {
+		Client client = ClientBuilder.newClient();
+		WebTarget wt = client.target(jenkinsApi);
+		
+		Response response = wt.path("/job/"+projectId+"/"+buildNumber+"/consoleText")
+				.request(MediaType.APPLICATION_JSON)
+				.header("Authorization", authorizationHeaderValue)
+		    	.get();
+		
+		logger.info("Response from jenkins: "+response.getStatus());
+		return response;
+	}
 }

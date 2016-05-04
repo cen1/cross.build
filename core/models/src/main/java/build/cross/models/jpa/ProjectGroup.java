@@ -4,16 +4,18 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import build.cross.models.jpa.common.BaseEntity;
+import build.cross.models.jpa.common.BaseUserEntity;
 
 @Table(name="project_groups")
 @Entity
-public class ProjectGroup extends BaseEntity implements Serializable {
+public class ProjectGroup extends BaseUserEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -21,11 +23,7 @@ public class ProjectGroup extends BaseEntity implements Serializable {
 	
 	private String repository;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
-	
-	@OneToMany(mappedBy="projectGroup")
+	@OneToMany(mappedBy="projectGroup", fetch=FetchType.EAGER)
 	private List<Project> projects;
 	
 	public String getName() {
@@ -42,14 +40,6 @@ public class ProjectGroup extends BaseEntity implements Serializable {
 
 	public void setRepository(String repository) {
 		this.repository = repository;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public List<Project> getProjects() {

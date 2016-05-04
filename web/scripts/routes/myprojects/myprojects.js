@@ -1,4 +1,8 @@
-export default /*@ngInject*/ ($scope, Vms) => {
+export default /*@ngInject*/ ($scope, ProjectGroups) => {
 	
-	console.log("My projects");
+	$scope.myprojects = [];
+	
+	ProjectGroups.get().success((data) => {
+		$scope.myprojects = data;
+	});
 };

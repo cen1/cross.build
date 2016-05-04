@@ -51,13 +51,13 @@ app.config(($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider
 
 config.auth = {};
 
-app.run(($rootScope, $state, $stateParams) => {
+app.run(($rootScope, $state, $stateParams, $location) => {
 
     $rootScope.$state = $state;
 
     // auth
     $rootScope.$on('$stateChangeStart', (event, toState) => {
-
+        //console.log("state change start");
         if (toState.requiresAuth) {
 
             if (config.auth.keycloak.authenticated) {
@@ -74,6 +74,12 @@ app.run(($rootScope, $state, $stateParams) => {
             }
         }
     });
+    
+    /*$rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
+        console.log("state change success");
+        console.log(locationSearch);
+        $location.search(locationSearch);
+    });*/
 
     $rootScope.$on('noAuthentication',(event, url) => {
 
@@ -81,7 +87,6 @@ app.run(($rootScope, $state, $stateParams) => {
     });
 
     $rootScope.$on('noAuthorization', () => {
-
         $state.transitionTo('layout.home');
     });
 

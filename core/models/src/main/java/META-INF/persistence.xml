@@ -12,7 +12,9 @@
 		<class>build.cross.models.jpa.User</class>
 		<class>build.cross.models.jpa.Vm</class>
 		<class>build.cross.models.jpa.VmSetting</class>
+		
 		<class>build.cross.models.jpa.common.BaseEntity</class>
+		<class>build.cross.models.jpa.common.BaseUserEntity</class>
 		
 		<properties>
 			<property name="hibernate.default_schema" value="crossbuild"/>

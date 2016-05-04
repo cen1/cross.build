@@ -1,0 +1,56 @@
+<div class="wrapper container-fluid">
+<div class="row" style="padding-bottom: 50px">
+    <div class="col-xs-2">
+        <span class="label label-default" style="width: 100%; display: block">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>My projects
+        </span>
+        <div class="btn-group-vertical" style="width: 100%">
+            <button ng-repeat="project in myprojects" type="button" class="btn" style="width: 100%" 
+                ng-click="select(project)" ng-class="projectgroup.id==project.id ? 'btn-info' : 'btn-default'">{{ project.name }}</button>    
+        </div>
+    </div>
+    <div class="col-xs-8" style="padding-left: 1em; padding-right: 1em">
+        <div ng-if="projectgroup">
+            <span class="label label-default" style="width: 100%; display: block">Project builds</span>
+            <br />
+            <div class="row">
+                <div ng-repeat="status in projectStatus" class="col-xs-6 vmcard">
+                    <buildhistory status="status" projectgroup="projectgroup">                   
+                </div>
+            </div>
+            <br />
+            <hr />
+            <span class="label label-default" style="width: 100%; display: block">Configure project</span>
+            <form ng-submit="updateproject()" role="form">
+                <div class="form-group">
+                    <label for="addnew-repourl">Repository URL:</label>
+                    <input type="text" style="width: 400px" ng-model="projectgroup.repository" class="form-control" id="addnew-repourl"/>
+                    <div ng-repeat="project in projectgroup.projects">
+                        <hr />
+                        <ppcard project="project"></ppcard>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">
+                        <span id="submit-addnew" class="glyphicon"></span> Save    
+                    </button>
+                </div>
+            </form>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+    <div class="col-xs-2">
+        <div ng-if="projectgroup">
+            <span class="label label-default" style="width: 100%; display: block">Actions</span>
+            <div class="btn-group-vertical" style="width: 100%">
+                <button type="button" class="btn btn-default" style="width: 100%" ng-click="delete()">Delete project</button>
+                <button type="button" class="btn btn-default" style="width: 100%" ng-click="build()">Build now</button>  
+            </div>
+        </div>
+    </div>
+</div>
+</div>

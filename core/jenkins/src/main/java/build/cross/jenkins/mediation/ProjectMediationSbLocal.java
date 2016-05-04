@@ -10,5 +10,11 @@ import build.cross.models.jpa.Project;
 public interface ProjectMediationSbLocal {
 
 	Response addProject(Project project);
+
+	Response getProjectInfo(String projectId);
+
+	Response getBuildDetails(String projectId, String buildNumber);
+
+	Response getBuildConsoleText(String projectId, String buildNumber);
 	
 }

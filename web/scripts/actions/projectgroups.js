@@ -11,6 +11,18 @@ export default subModule.factory('ProjectGroups', /*@ngInject*/ ($http) => {
     return {
         addnew(data = {}, config = {}) {
             return $http.post(api + source, data, config);
+        },
+        get() {
+            return $http.get(api+source);
+        },
+        getStatus(projectGroupId, projectId) {
+            return $http.get(api+source+"/"+projectGroupId+"/projects/"+projectId+"/status");
+        },
+        getBuildDetails(projectGroupId, projectId, buildNumber) {
+            return $http.get(api+source+"/"+projectGroupId+"/projects/"+projectId+"/build/"+buildNumber);
+        },
+        getBuildConsole(projectGroupId, projectId, buildNumber) {
+            return $http.get(api+source+"/"+projectGroupId+"/projects/"+projectId+"/build/"+buildNumber+"/console", {responseType:"text"});
         }
     }
 });

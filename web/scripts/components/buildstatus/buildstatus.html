@@ -1,0 +1,14 @@
+<span>
+    <img ng-show="result=='SUCCESS' && !status.building" 
+        ng-src="/images/jenkins/blue.png"
+        style="height: 16px; width: 16px" title="SUCCESS"/>
+    <img ng-show="result=='FAILURE' && !status.building" 
+        ng-src="/images/jenkins/red.png"
+        style="height: 16px; width: 16px" title="FAILURE"/>
+    <img ng-show="result=='SUCCESS' && status.building" 
+        ng-src="/images/jenkins/blue_anime.gif"
+        style="height: 16px; width: 16px" title="SUCCESS"/>
+    <img ng-show="result=='FAILURE' && status.building" 
+        ng-src="/images/jenkins/red_anime.gif"
+        style="height: 16px; width: 16px" title="FAILURE"/>
+</span>

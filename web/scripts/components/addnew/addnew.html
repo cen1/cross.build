@@ -1,28 +1,32 @@
-<div class="col-xs-4">
-	<form ng-submit="addnew()" role="form">
-		<div class="form-group">
-			<label for="addnew-name">Project name:</label>
-			<input type="text" style="width: 400px" ng-model="projectgroup.name" class="form-control" id="addnew-name"/>
+<div class="wrapper container-fluid">
+	<div class="row">
+		<div class="col-xs-4">
+			<form ng-submit="addnew()" role="form">
+				<div class="form-group">
+					<label for="addnew-name">Project name:</label>
+					<input type="text" style="width: 400px" ng-model="projectgroup.name" class="form-control" id="addnew-name"/>
+				</div>
+				<div class="form-group">
+					<label for="addnew-repourl">Repository URL:</label>
+					<input type="text" style="width: 400px" ng-model="projectgroup.repository" class="form-control" id="addnew-repourl"/>
+				</div>
+				<div class="form-group">
+					<label for="addnew-platforms">Choose one or more platforms:</label>
+					<select ng-model="selectedPlatform" class="form-control" id="addnew-platforms" ng-change="addPlatform()">
+						<option ng-repeat="v in vmset" value="{{v}}">{{v.platform.name}} {{v.platform.version}} ({{v.platform.arch}}) on {{v.provider}}</option>
+					</select>
+				</div>
+				<div ng-repeat="project in projectgroup.projects">
+					<hr />
+					<ppcard project="project"></ppcard><button class="btn btn-danger" ng-click="removePlatform(project)" type="button">Remove</button>
+				</div>
+				<br />
+				<div class="form-group">
+					<button class="btn btn-success" type="submit">
+						<span id="submit-addnew" class="glyphicon"></span> Submit    
+					</button>
+				</div>
+			</form>
 		</div>
-		<div class="form-group">
-			<label for="addnew-repourl">Repository URL:</label>
-			<input type="text" style="width: 400px" ng-model="projectgroup.repository" class="form-control" id="addnew-repourl"/>
-		</div>
-		<div class="form-group">
-			<label for="addnew-platforms">Choose one or more platforms:</label>
-			<select ng-model="selectedPlatform" class="form-control" id="addnew-platforms" ng-change="addPlatform()">
-				<option ng-repeat="v in vmset" value="{{v}}">{{v.platform.name}} {{v.platform.version}} ({{v.platform.arch}}) on {{v.provider}}</option>
-			</select>
-		</div>
-		<div ng-repeat="project in projectgroup.projects">
-			<hr />
-			<ppcard project="project"></ppcard><button class="btn btn-danger" ng-click="removePlatform(project)" type="button">Remove</button>
-		</div>
-		<br />
-		<div class="form-group">
-			<button class="btn btn-success" type="submit">
-				<span id="submit-addnew" class="glyphicon"></span> Submit    
-			</button>
-		</div>
-	</form>
+	</div>
 </div>

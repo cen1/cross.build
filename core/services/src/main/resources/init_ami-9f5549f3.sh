@@ -19,3 +19,4 @@ service pf start
 cp -R /usr/jails/flavours/example /usr/jails/flavours/base
 cp /etc/resolv.conf /usr/jails/flavours/base/etc/
 cp ezjail.flavour /usr/jails/flavours/base
+echo 'crossbuild ALL=(ALL) NOPASSWD:ALL' >> /usr/jails/flavours/base/usr/local/etc/sudoers

@@ -39,6 +39,13 @@ export default subModule.directive('vmcard', () => {
                         timeseries,
                         data
                     ]
+                },
+                axis : {
+                    y : {
+                        tick: {
+                            format: function (d) { return d.toFixed(2); }
+                        }
+                    }
                 }
             });         
             }

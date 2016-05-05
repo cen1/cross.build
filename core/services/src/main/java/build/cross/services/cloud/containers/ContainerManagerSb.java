@@ -25,6 +25,7 @@ import build.cross.models.jpa.LoadHistory;
 import build.cross.models.jpa.Project;
 import build.cross.models.jpa.VmSetting;
 import build.cross.services.cloud.management.VmManagerSbLocal;
+import build.cross.services.cloud.metrics.EvaluateLoadTimerSb;
 import build.cross.services.common.CloudCommon;
 import build.cross.services.exceptions.ServiceException;
 
@@ -50,13 +51,22 @@ public class ContainerManagerSb extends CloudCommon implements ContainerManagerS
 		
 		Query query = em.createNamedQuery("LoadHistory.findMinLoad");
 		query.setParameter("groupName", vmSetting.getGroupName());
-		query.setMaxResults(1);
 		
 		List<Object[]> lhList = query.getResultList();
+		LoadHistory lh = null;
 		if (lhList.size()==0) {
 			throw new ServiceException("No slaves avalible");
+		} else {
+			for (Object[] l : lhList) {
+				if ((Double)l[0] < EvaluateLoadTimerSb.DISK_TRESHOLD) {
+					lh = em.find(LoadHistory.class, l[0]);
+					break;
+				}
+			}
 		}
-		LoadHistory lh = em.find(LoadHistory.class, lhList.get(0)[0]);
+		if (lh==null) {
+			throw new ServiceException("No slaves avalible");
+		}
 		
 		NodeMetadata node = vmm.getNodeFromVm(lh.getVm());
 		

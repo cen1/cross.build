@@ -134,8 +134,24 @@ public class NodeMediationSb extends MediationCommonSb implements NodeMediationS
 				.header("Authorization", authorizationHeaderValue)
 		    	.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED));
 		
-		logger.info("Response from jenkins: "+response.getStatus());
+		//logger.info("Response from jenkins: "+response.getStatus());
 		
+		return response;
+	}
+	
+	@Override
+	public Response deleteNode(String nodeId) {
+		Client client = ClientBuilder.newClient();
+		WebTarget wt = client.target(jenkinsApi);
+		
+		Form form = new Form();
+		
+		Response response = wt.path("/computer/"+nodeId+"/doDelete")
+				.request(MediaType.APPLICATION_JSON)
+				.header("Authorization", authorizationHeaderValue)
+		    	.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED));
+		
+		logger.info("Response from jenkins: "+response.getStatus());
 		return response;
 	}
 }

@@ -195,6 +195,9 @@
 	     <column name="create_container_cmd" type="varchar(2048)">
 	       <constraints nullable="false"/>
 	     </column>
+	      <column name="delete_container_cmd" type="varchar(2048)">
+	       <constraints nullable="false"/>
+	     </column>
 	     <column name="platform_id" type="varchar(36)">
 	       <constraints nullable="false"/>
 	     </column>

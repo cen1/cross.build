@@ -21,6 +21,7 @@ import actions from './actions'
 
 import c3 from 'c3'
 import Notification from 'angular-ui-notification'
+//import luegg from 'angularjs-scroll-glue'
 
 export let app = angular.module('cross-build', [
     ngRouter,
@@ -32,7 +33,8 @@ export let app = angular.module('cross-build', [
     ngMask,
     ngTable,
     Notification,
-
+    //luegg.directives,
+    
     utils.name,
     filters.name,
     interceptors.name,

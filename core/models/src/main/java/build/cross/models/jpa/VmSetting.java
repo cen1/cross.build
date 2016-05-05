@@ -72,6 +72,11 @@ public class VmSetting extends BaseEntity implements Serializable {
 	@JsonIgnore
 	private String createContainerCmd;
 	
+	//command which creates new container
+	@Column(name="delete_container_cmd")
+	@JsonIgnore
+	private String deleteContainerCmd;
+	
 	@OneToMany(mappedBy="vmSetting")
 	@JsonIgnore
 	private List<Vm> vms;
@@ -134,6 +139,14 @@ public class VmSetting extends BaseEntity implements Serializable {
 		this.createContainerCmd = createContainerCmd;
 	}
 	
+	public String getDeleteContainerCmd() {
+		return deleteContainerCmd;
+	}
+
+	public void setDeleteContainerCmd(String deleteContainerCmd) {
+		this.deleteContainerCmd = deleteContainerCmd;
+	}
+
 	public Platform getPlatform() {
 		return platform;
 	}
@@ -167,6 +180,7 @@ public class VmSetting extends BaseEntity implements Serializable {
 			boolean bootstrapDos2Unix, 
 			String containerFile, 
 			String createContainerCmd,
+			String deleteContainerCmd,
 			Platform platform,
 			CloudProvider provider) {
 		super();
@@ -177,6 +191,7 @@ public class VmSetting extends BaseEntity implements Serializable {
 		this.bootstrapAsSudo = bootstrapAsSudo;
 		this.containerFile = containerFile;
 		this.createContainerCmd = createContainerCmd;
+		this.deleteContainerCmd = deleteContainerCmd;
 		
 		this.bootstrapUploadPath = bootstrapUploadPathPrefix+"/"+loginUser+"/"+"bootstrap_"+amiId+".sh";
 		this.groupName = "crossbuild-"+amiId;

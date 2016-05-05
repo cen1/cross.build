@@ -10,4 +10,6 @@ public interface ContainerManagerSbLocal {
 
 	Project createNewContainer(Project project) throws ServiceException;
 
+	void deleteContainer(Project project) throws ServiceException;
+
 }

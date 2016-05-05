@@ -10,4 +10,6 @@ public interface NodeMediationSbLocal {
 
 	Response createNode(Container container);
 
+	Response deleteNode(String nodeId);
+
 }

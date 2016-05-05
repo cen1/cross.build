@@ -137,4 +137,15 @@ public class ContainerManagerSb extends CloudCommon implements ContainerManagerS
 		return project;
 		
 	}
+	
+	@Override
+	public void deleteContainer(Project project) throws ServiceException {
+		NodeMetadata node = vmm.getNodeFromVm(project.getContainer().getVm());
+		String delCmd = project.getVmSetting().getDeleteContainerCmd();
+		delCmd = delCmd.replace("%NAME%", project.getContainer().getName());
+		
+		logger.info("Deleting container with command: "+delCmd);
+		Integer status = vmm.executeScriptAsRoot(node, project.getVmSetting(), delCmd);
+		if (status!=0) throw new ServiceException("Nonzero status on exit");
+	}
 }

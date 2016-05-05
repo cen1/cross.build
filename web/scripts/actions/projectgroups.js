@@ -16,7 +16,10 @@ export default subModule.factory('ProjectGroups', /*@ngInject*/ ($http) => {
             return $http.put(api + source + "/"+data.id, data, config);
         },
         get() {
-            return $http.get(api+source);
+            return $http.get(api+source, {params: {order:"createdAt DESC"}});
+        },
+        delete(projectGroupId) {
+            return $http.delete(api+source+"/"+projectGroupId);
         },
         getStatus(projectGroupId, projectId) {
             return $http.get(api+source+"/"+projectGroupId+"/projects/"+projectId+"/status");
@@ -26,6 +29,13 @@ export default subModule.factory('ProjectGroups', /*@ngInject*/ ($http) => {
         },
         getBuildConsole(projectGroupId, projectId, buildNumber) {
             return $http.get(api+source+"/"+projectGroupId+"/projects/"+projectId+"/build/"+buildNumber+"/console", {responseType:"text"});
+        },
+        buildNow(projectGroupId) {
+            return $http.get(api+source+"/"+projectGroupId+"/buildNow");
+        },
+        getProgressiveConsole(projectGroupId, projectId, buildNumber, start) {
+            return $http.get(api+source+"/"+projectGroupId+"/projects/"+projectId+"/build/"+buildNumber+"/progressiveConsole", 
+            {params: {start: start}});
         }
     }
 });

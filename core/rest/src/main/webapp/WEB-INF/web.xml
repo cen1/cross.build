@@ -36,6 +36,11 @@
             <param-name>cors.supportedHeaders</param-name>
             <param-value>Authorization, Origin, Accept, Content-Type</param-value>
         </init-param>
+        
+        <init-param>
+        	<param-name>cors.exposedHeaders</param-name>
+        	<param-value>X-Text-Size, X-More-Data</param-value>
+        </init-param>
 
         <init-param>
             <param-name>cors.supportsCredentials</param-name>

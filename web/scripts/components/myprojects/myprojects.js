@@ -10,7 +10,10 @@ export default subModule.directive('myprojects', () => {
         scope: {
             myprojects: '=',
             updateProject: '=',
-            selectedProjectGroup: '='      
+            selectedProjectGroup: '=',
+            buildNow: '=',
+            deleteProject: '=',
+            pauseRefresh: '='
         },
         template,
         controller: /*@ngInject*/ ($scope, ProjectGroups, $location) => {

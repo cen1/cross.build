@@ -5,14 +5,17 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import build.cross.jenkins.mediation.NodeMediationSbLocal;
@@ -130,7 +133,7 @@ public class ProjectGroupResource extends CrudUserResource<ProjectGroup> {
 	
 	@GET
 	@Path("/{projectGroupId}/projects/{projectId}/build/{buildNumber}")
-	public Response getStatus(
+	public Response getBuild(
 			@PathParam(value="userId") String userId,
 			@PathParam(value="projectGroupId") String projectGroupId,
 			@PathParam(value="projectId") String projectId,
@@ -143,7 +146,7 @@ public class ProjectGroupResource extends CrudUserResource<ProjectGroup> {
             throw new ApiException(new ApiError(404, "Resource not found", ProjectGroup.class.getSimpleName()+" "+projectGroupId));
         }
 				
-		Response r = jenkinsProjects.getBuildDetails(proj.getId(), buildNumber);;
+		Response r = jenkinsProjects.getBuildDetails(proj.getId(), buildNumber);
 		String json = r.readEntity(String.class);
 		return Response.ok(json).build();
 	}
@@ -164,8 +167,69 @@ public class ProjectGroupResource extends CrudUserResource<ProjectGroup> {
             throw new ApiException(new ApiError(404, "Resource not found", ProjectGroup.class.getSimpleName()+" "+projectGroupId));
         }
 				
-		Response r = jenkinsProjects.getBuildConsoleText(proj.getId(), buildNumber);;
+		Response r = jenkinsProjects.getBuildConsoleText(proj.getId(), buildNumber);
 		String json = r.readEntity(String.class);
 		return Response.ok(json).build();
+	}
+	
+	@GET
+	@Path("/{projectGroupId}/buildNow")
+	public Response buildNow(
+			@PathParam(value="userId") String userId,
+			@PathParam(value="projectGroupId") String projectGroupId) throws ApiException {
+		
+		ProjectGroup projectGroup = validateEntity(userId, projectGroupId);
+		
+		for (Project project : projectGroup.getProjects()) {
+			jenkinsProjects.buildNow(project.getId());
+		}
+		return Response.ok().build();
+	}
+	
+	@GET
+	@Path("/{projectGroupId}/projects/{projectId}/build/{buildNumber}/progressiveConsole")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getProgressiveConsole(
+			@PathParam(value="userId") String userId,
+			@PathParam(value="projectGroupId") String projectGroupId,
+			@PathParam(value="projectId") String projectId,
+			@PathParam(value="buildNumber") String buildNumber,
+			@QueryParam(value="start") String start) throws ApiException, JsonProcessingException, IOException {
+		
+		ProjectGroup pg = validateEntity(userId, projectGroupId);
+		Project proj = em.find(Project.class, projectId);
+		
+		if (pg == null || proj == null || !proj.getProjectGroup().equals(pg)) {
+            throw new ApiException(new ApiError(404, "Resource not found", ProjectGroup.class.getSimpleName()+" "+projectGroupId));
+        }
+				
+		Response r = jenkinsProjects.getProgressiveConsole(proj.getId(), buildNumber, start);
+		String json = r.readEntity(String.class);
+		
+		return Response.ok(json).header("X-Text-Size", r.getHeaderString("X-Text-Size"))
+								.header("X-More-Data", r.getHeaderString("X-More-Data"))
+								.build();
+	}
+	
+	@DELETE
+	@Path("/{projectGroupId}")
+	@Transactional
+	public Response delete(@PathParam(value="userId") String userId, 
+						   @PathParam(value="projectGroupId") String projectGroupId) throws ApiException {
+		ProjectGroup projectGroup = validateEntity(userId, projectGroupId);
+		
+		//delete from jenkins and containers
+		for (Project project : projectGroup.getProjects()) {
+			jenkinsProjects.deleteProject(project.getId());
+			jenkinsNodes.deleteNode(project.getContainer().getName());
+			try {
+				cmng.deleteContainer(project);
+			} catch (ServiceException e) {
+				throw new ApiException(new ApiError(500, "Error deleting containers"));
+			}
+		}		
+		em.remove(projectGroup);
+		
+		return Response.ok().build();
 	}
 }

@@ -9,12 +9,15 @@ export default subModule.directive('buildhistory', () => {
         replace: true,
         scope: {
             selectedProjectGroup: '=',
-            status: '='
+            status: '=',
+            pauseRefresh: '='
         },
         template,
-        controller: /*@ngInject*/ ($scope, ProjectGroups) => {
+        controller: /*@ngInject*/ ($scope, ProjectGroups, $interval) => {
             $scope.buildJobs = new Map();
             $scope.selectedBuildJobs = new Map();
+            $scope.latestBuildNumber = 0;
+            $scope.latestBuild=null;
             
             $scope.buildConsole = new Map();
             $scope.viewLog = new Map();
@@ -31,6 +34,10 @@ export default subModule.directive('buildhistory', () => {
                 
                 ProjectGroups.getBuildDetails($scope.selectedProjectGroup.id, $scope.status.name, build.number).success((data) => {
                     $scope.buildJobs.set(build.number, data);
+                    if (build.number>$scope.latestBuildNumber) {
+                        $scope.latestBuildNumber = build.number;
+                        $scope.latestBuild=data;
+                    }
                 });
             }
             
@@ -38,10 +45,10 @@ export default subModule.directive('buildhistory', () => {
                 if (typeof $scope.viewLog.get(build.number)==='undefined') {
                         $scope.viewLog.set(build.number, false);
                 }
-                    var current = $scope.viewLog.get(build.number);
-                    $scope.viewLog.set(build.number, !current);
+                var current = $scope.viewLog.get(build.number);
+                $scope.viewLog.set(build.number, !current);
                 ProjectGroups.getBuildConsole($scope.selectedProjectGroup.id, $scope.status.name, build.number).success((data) => {
-                    $scope.buildConsole.set(build.number, data);
+                    $scope.buildConsole.set(parseInt(build.number), data);
                 });
             }
             
@@ -51,7 +58,67 @@ export default subModule.directive('buildhistory', () => {
                 }
             }
             
-            $scope.initLast3();          
+            $scope.initLast3();
+            
+            //live update
+            var numBuilds = $scope.status.builds.length;
+            
+            var offset = 0;
+            var moreData = false;
+            $scope.refreshInterval = $interval(() => {
+                if (!$scope.pauseRefresh) {
+                    ProjectGroups.getStatus($scope.selectedProjectGroup.id, $scope.status.name).success((data) => {
+                        
+                        
+                        if (data.builds.length > numBuilds || ($scope.latestBuild!=null && $scope.latestBuild.building)) {
+                            var buildNum = 0;
+                            if (data.builds.length > numBuilds) {
+                                numBuilds=data.builds.length;
+                                $scope.status.builds.splice(0, 0, data.builds[0]);
+                                $scope.openBuild(data.builds[0], true);
+                                
+                                buildNum = parseInt(data.builds[0].number);
+                            } else {
+                                buildNum=parseInt($scope.latestBuild.id);
+                            }
+                            
+                            $scope.viewLog.set(buildNum, true);
+                            if (!$scope.buildConsole.has(buildNum)) {
+                                $scope.buildConsole.set(buildNum, "");
+                            }
+                            
+                            ProjectGroups.getProgressiveConsole($scope.selectedProjectGroup.id, $scope.status.name, buildNum, offset)
+                                .success((data, status, headers) => {
+                                
+                                var textSize = parseInt(headers("X-Text-Size"));
+                                moreData = headers("X-More-Data");
+                                var existingText = $scope.buildConsole.get(buildNum);
+                                $scope.buildConsole.set(buildNum, existingText+data);
+                                
+                                if (textSize>offset) {
+                                    offset=textSize;
+                                }
+                                
+                                if (!moreData || moreData==null || $scope.pauseRefresh) {
+                                    offset=0;
+                                    $scope.latestBuild.building=false;
+                                    $scope.openBuild(buildNum, true);
+                                }
+                            }).error((data, status) => {
+                                offset=0;
+                                $scope.latestBuild.building=false;
+                            });
+                            
+                        }
+                    });
+                }
+            }, 3000);
+            
+            $scope.$on("$destroy",function(){
+                if (angular.isDefined($scope.refreshInterval)) {
+                    $interval.cancel($scope.refreshInterval);
+                }
+            });       
         }
     }
 });

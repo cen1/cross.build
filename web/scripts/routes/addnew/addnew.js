@@ -1,4 +1,4 @@
-export default /*@ngInject*/ ($scope, ProjectGroups, VmSettings, Notification) => {
+export default /*@ngInject*/ ($scope, $state, ProjectGroups, VmSettings, Notification) => {
 	
 	$scope.vmset = {};
 	$scope.projectgroup = {
@@ -16,7 +16,8 @@ export default /*@ngInject*/ ($scope, ProjectGroups, VmSettings, Notification) =
 		
 		ProjectGroups.addnew($scope.projectgroup).success((data) => {
 			submit.removeClass("glyphicon-refresh glyphicon-refresh-animate");
-			Notification.success("Project added successfully.");				
+			Notification.success("Project added successfully.");
+			$state.transitionTo('layout.myprojects', {pgid: data.id});			
 		}).error((data, status) => {
 			submit.removeClass("glyphicon-refresh glyphicon-refresh-animate");
 			Notification.error("Error adding the project: "+data.description);

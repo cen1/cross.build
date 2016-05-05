@@ -30,7 +30,7 @@ public class ValidatePermissionsInterceptor {
     @AroundInvoke
     public Object checkUser(InvocationContext context) throws Exception {
 
-    	logger.info("ValidatePermissions interceptor");
+    	//logger.info("ValidatePermissions interceptor");
     	
     	String pathInfo = request.getPathInfo();
     	String[] pathParts = pathInfo.split("/");

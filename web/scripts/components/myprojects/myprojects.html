@@ -15,16 +15,18 @@
             <br />
             <div class="row">
                 <div ng-repeat="status in projectStatus" class="col-xs-6 vmcard">
-                    <buildhistory status="status" selected-project-group="selectedProjectGroup">                   
+                    <buildhistory status="status" selected-project-group="selectedProjectGroup" pause-refresh="pauseRefresh">                   
                 </div>
             </div>
             <br />
             <hr />
             <span class="label label-default" style="width: 100%; display: block">Configure project</span>
-            <form ng-submit="updateProject()" role="form">
+            <form ng-submit="updateProject()" role="form" name="formUpdate">
                 <div class="form-group">
                     <label for="addnew-repourl">Repository URL:</label>
-                    <input type="text" style="width: 400px" ng-model="selectedProjectGroup.repository" class="form-control" id="addnew-repourl"/>
+                    <input type="text" style="width: 400px" ng-model="selectedProjectGroup.repository" 
+                        class="form-control" id="addnew-repourl" name="url" ng-required="true"/>
+                    <validator-messages form="formUpdate.url"></validator-messages>
                     <div ng-repeat="project in selectedProjectGroup.projects">
                         <hr />
                         <ppcard project="project"></ppcard>
@@ -47,8 +49,10 @@
         <div ng-if="selectedProjectGroup">
             <span class="label label-default" style="width: 100%; display: block">Actions</span>
             <div class="btn-group-vertical" style="width: 100%">
-                <button type="button" class="btn btn-default" style="width: 100%" ng-click="delete()">Delete project</button>
-                <button type="button" class="btn btn-default" style="width: 100%" ng-click="build()">Build now</button>  
+                <button type="button" class="btn btn-default" style="width: 100%" ng-click="deleteProject()">
+                    <span id="delete-project" class="glyphicon"></span> Delete project
+                </button>
+                <button type="button" class="btn btn-default" style="width: 100%" ng-click="buildNow()">Build now</button>  
             </div>
         </div>
     </div>

@@ -17,5 +17,11 @@ public interface ProjectMediationSbLocal {
 	Response getBuildConsoleText(String projectId, String buildNumber);
 
 	Response configureProject(Project project);
+
+	Response buildNow(String projectId);
+
+	Response getProgressiveConsole(String projectId, String buildNumber, String offset);
+
+	Response deleteProject(String projectId);
 	
 }

@@ -35,7 +35,7 @@ public class ProjectMediationSb extends MediationCommonSb implements ProjectMedi
 				.header("Authorization", authorizationHeaderValue)
 		    	.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED));
 		
-		logger.info("Response from jenkins: "+response.getStatus());
+		//logger.info("Response from jenkins: "+response.getStatus());
 		
 		return response;
 	}
@@ -112,7 +112,7 @@ public class ProjectMediationSb extends MediationCommonSb implements ProjectMedi
 		
 		json.put("core:apply", "");
 		
-		logger.info(json.toString());
+		//logger.info(json.toString());
 		
 		//generate form
 		form.param("name", project.getId());
@@ -242,7 +242,7 @@ public class ProjectMediationSb extends MediationCommonSb implements ProjectMedi
 				.header("Authorization", authorizationHeaderValue)
 		    	.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED));
 		
-		logger.info("Response from jenkins: "+response.getStatus());
+		//logger.info("Response from jenkins: "+response.getStatus());
 		logger.info("Created job "+project.getId());
 		
 		return response;
@@ -258,7 +258,7 @@ public class ProjectMediationSb extends MediationCommonSb implements ProjectMedi
 				.header("Authorization", authorizationHeaderValue)
 		    	.get(); //.queryParam("pretty", "true")
 		
-		logger.info("Response from jenkins: "+response.getStatus());
+		//logger.info("Response from jenkins: "+response.getStatus());
 		return response;
 	}
 	
@@ -272,7 +272,7 @@ public class ProjectMediationSb extends MediationCommonSb implements ProjectMedi
 				.header("Authorization", authorizationHeaderValue)
 		    	.get(); //.queryParam("pretty", "true")
 		
-		logger.info("Response from jenkins: "+response.getStatus());
+		//logger.info("Response from jenkins: "+response.getStatus());
 		return response;
 	}
 	
@@ -286,7 +286,55 @@ public class ProjectMediationSb extends MediationCommonSb implements ProjectMedi
 				.header("Authorization", authorizationHeaderValue)
 		    	.get();
 		
-		logger.info("Response from jenkins: "+response.getStatus());
+		//logger.info("Response from jenkins: "+response.getStatus());
+		return response;
+	}
+	
+	@Override
+	public Response buildNow(String projectId) {
+		Client client = ClientBuilder.newClient();
+		WebTarget wt = client.target(jenkinsApi);
+		
+		Response response = wt.path("/job/"+projectId+"/build")
+				.queryParam("delay", "0sec")
+				.request(MediaType.APPLICATION_JSON)
+				.header("Authorization", authorizationHeaderValue)
+		    	.post(Entity.json(null));
+		
+		//logger.info("Response from jenkins: "+response.getStatus());
+		return response;
+	}
+	
+	@Override
+	public Response getProgressiveConsole(String projectId, String buildNumber, String offset) {
+		Client client = ClientBuilder.newClient();
+		WebTarget wt = client.target(jenkinsApi);
+		
+		Form form = new Form();
+		form.param("start", offset);
+		
+		Response response = wt.path("/job/"+projectId+"/"+buildNumber+"/logText/progressiveHtml")
+				.request(MediaType.TEXT_HTML)
+				.header("Authorization", authorizationHeaderValue)
+		    	.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED));
+		
+		//logger.info("Response from jenkins: "+response.getStatus());
+		return response;
+	}
+	
+	@Override
+	public Response deleteProject(String projectId) {
+		Client client = ClientBuilder.newClient();
+		WebTarget wt = client.target(jenkinsApi);
+		
+		Form form = new Form();
+		
+		Response response = wt.path("/job/"+projectId+"/doDelete")
+				.request(MediaType.APPLICATION_JSON)
+				.header("Authorization", authorizationHeaderValue)
+		    	.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED));
+		
+		//logger.info("Response from jenkins: "+response.getStatus());
 		return response;
 	}
 }

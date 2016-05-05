@@ -63,7 +63,8 @@
     "stringify": "~3.1.0",
     "jquery": "~2.1.4",
     "d3": "~3.5.16",
-    "c3": "~0.4.11-rc4"
+    "c3": "~0.4.11-rc4",
+    "angularjs-scroll-glue": "~2.0.4"
   },
   "browserify": {
     "transform": [

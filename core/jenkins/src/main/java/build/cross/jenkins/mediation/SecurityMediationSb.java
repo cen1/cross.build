@@ -59,7 +59,7 @@ public class SecurityMediationSb extends MediationCommonSb implements SecurityMe
 				.header("Authorization", authorizationHeaderValue)
 		    	.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED));
 		
-		logger.info("Response from jenkins: "+response.getStatus());
+		//logger.info("Response from jenkins: "+response.getStatus());
 		
 		return response;
 	}

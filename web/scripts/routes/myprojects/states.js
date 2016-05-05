@@ -3,7 +3,7 @@ import template from './myprojects.html';
 
 export default {
     id: 'myprojects',
-    url: '/myprojects',
+    url: '/myprojects?pgid',
     requiresAuth: true,
     controller,
     template

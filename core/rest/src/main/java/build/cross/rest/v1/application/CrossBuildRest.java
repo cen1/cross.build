@@ -11,7 +11,7 @@ public class CrossBuildRest extends Application {
 
 	public static final String BASE_URL = Optional.ofNullable(System.getenv("BASE_URL")).orElse("http://localhost:8080") + "/v1";
 
-    public static final Integer QUERY_DEFAULT_LIMIT = 10;
+    public static final Integer QUERY_DEFAULT_LIMIT = 50;
     public static final Integer QUERY_DEFAULT_OFFSET = 0;
     public static final Integer QUERY_MAX_LIMIT = 100;
 

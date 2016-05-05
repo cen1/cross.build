@@ -53,6 +53,7 @@ public class KeypairsAndSgInit implements KeypairsAndSgInitLocal {
 				"su - root -c \"ezjail-admin create -f base %NAME% 'lo1|%IP%' && ezjail-admin start %NAME% && "+
 				"echo 'rdr pass on xn0 proto tcp from any to $IP_PUB port %PORT% -> %IP% port 22' >> /etc/pf.conf &&"+
 				"pfctl -f /etc/pf.conf\"",
+				"su - root -c \"ezjail-admin stop %NAME% && ezjail-admin delete -w %NAME%\"",
 				freebsd10,
 				CloudProvider.EC2);
 
@@ -65,6 +66,7 @@ public class KeypairsAndSgInit implements KeypairsAndSgInitLocal {
 				true, 
 				"Dockerfile",
 				"docker run -d -p %PORT%:22 --name %NAME% base",
+				"docker rm -f %NAME%",
 				ubuntu1404,
 				CloudProvider.EC2);
 		

@@ -59,7 +59,7 @@
             <button type="button" class="btn btn-default" ng-click="viewConsole(build)">View Log</button>
             <div ng-show="viewLog.get(build.number)">
                  <div class="form-group">
-                    <textarea class="form-control" rows="10" id="comment">{{ buildConsole.get(build.number) }}</textarea>
+                    <textarea class="form-control" rows="10" scroll-glue>{{ buildConsole.get(build.number) }}</textarea>
                 </div>                
             </div>
             <br />

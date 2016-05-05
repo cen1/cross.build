@@ -18,7 +18,6 @@ public class ApiExceptionMapper implements ExceptionMapper<ApiException> {
     public Response toResponse(ApiException exception) {
 
         ApiError e = exception.getError();
-        logger.info("heyo");
         return Response.status(e.getStatus()).entity(e).build();
     }
 }

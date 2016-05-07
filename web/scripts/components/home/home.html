@@ -1,5 +1,115 @@
-<div id="home-panel">
-	Cross.Build home
+<div id="home-panel" class="text-center">
+	<div class="row">
+		<div class="col-xs-4 text-left">
+			<h1>Build your code everywhere</h1>
+			<p>
+				Cross.Build allows you to build code on several platforms at once. Just provide your git repo and build commands for each platform.<br />
+				Main target are projects written in compiled languages (C, C++). This project is in a proof of concept stage. You can use this demo page to test but it can get wiped anytime.
+			</p>
+			<p>Supported platforms
+				<ul>
+					<li><img src="/images/Ubuntu.png" /> Ubuntu 14.04</li>
+					<li><img src="/images/Freebsd.png" /> Freebsd 10</li>
+				</ul>
+			</p>
+		</div>
+		<div class="col-xs-4 text-left">
+			<h1>How does it work?</h1>
+			<p>
+				<ol>
+					<li>Add your project by specifying your git repo url and build commands for each selected platform.</li>
+					<li>Cross.Build finds free build servers for each platform and creates a new container on each (Docker, Jail).</li>
+					<li>Containers are added as nodes to Jenkins.</li>
+					<li>A new Jenkins job is created for each platform. Each job executes in it's own container</li>
+					<li>Jenkins builds your project on each platform and you can view the results on Cross.Build frontend. Changes are detected by SCM polling.</li>
+					<li>Servers are constantly monitored for their load and new ones are automatically provisioned as the average load approaches the limit. EC2 is used as the provider.<br />
+					This means that build servers will automatically scale with the demand as new projects are added. No need to spin up the servers by yourself.</li>
+				</ol>
+			</p>
+		</div>
+		<div class="col-xs-4 text-left">
+			<h1>Design decisions</h1>
+			<p>
+				<ul>
+					<li>Build commands are stored in the database, not in project files. No need for CI specific bloat in your repo.</li>
+					<li>You have sudo access inside your containers. No preinstalled dependencies. You decide.</li>
+					<li>Only platforms available at major cloud providers and those with container support are avalible at the moment. This means Linux and FreeBSD.<br />
+						Windows Server 2016 is the next target once it is released with Docker support.
+					</li>
+				</ul>
+			</p>
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<h2>Technologies used</h2>
+	<br />
+	<br />
+	<div class="row text-left">
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/java_ee_logo.png" style="max-height: 75px; max-width: 75px;" align="left"/>
+				<img src="/images/kumuluzee_logo.png" style="max-height: 75px; max-width: 75px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				Backend in it's entierty is developed in Java-EE 7 and Java 8.
+				Load monitoring component is developed in Kumuluz-EE framework due to it's smaller footprint.
+			</p>
+		</div>
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/jenkins_logo.png" style="max-height: 150px; max-width: 150px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				Jenkins is used as the backend CI provider and is managed by Cross.Build via REST API.
+				At the moment only a subset of Jenkins functionalities are exposed via Cross.Build REST API and frontend.
+				More will be added as the project develops.
+			</p>
+		</div>
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/wildfly_logo.png" style="max-height: 150px; max-width: 150px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				WildFly 10 is used as the Java-EE application server for project deployment.
+			</p>
+		</div>
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/angularjs_logo.png" style="max-height: 150px; max-width: 150px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				Frontend is developed in AngularJs framework and uses Cross.Build REST API for all communication.
+			</p>
+		</div>
+	</div>
+	<div class="row text-left">
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/jclouds_logo.jpg" style="max-height: 150px; max-width: 150px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				JClouds Java library is used for provisioning of new virtual machines and command execution
+				in combination with custom bash scripts for server and container setup.
+			</p>
+		</div>
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/keycloak_logo.png" style="max-height: 150px; max-width: 150px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				Keycloak is used for authentication and authorization of users. Keycloak JavaScript library is used in
+				combination with AngularJs for seemles integration of user registration and login. GitHub is used as OAuth provider of the demo page.
+			</p>
+		</div>
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/docker_logo.png" style="max-height: 75px; max-width: 75px;" align="left"/>
+				<img src="/images/freebsd_logo.png" style="max-height: 75px; max-width: 75px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				Docker containers are used as Jenkins nodes on Linux platforms.
+				FreeBSD Jail containers are used as Jenkins nodes on FreeBSD platform.
+				Ezjail tool with base template and pf are used to manage the creation of new Jails.
+			</p>
+		</div>
+		<div class="col-xs-3">
+			<p>
+				<img src="/images/ec2_logo.png" style="max-height: 150px; max-width: 150px; margin-right: 10px; margin-bottom: 10px" align="left"/>
+				All build servers are currently provisioned on AWS EC2 via JClouds library. Due to platform agnostic nature of JClouds
+				it will be possible to support additional cloud providers in the future. EC2 was chosen as the initial provider
+				due to pricing and platform availability through AWS marketplace.
+			</p>
+		</div>
+	</div>	
 </div>
 
 

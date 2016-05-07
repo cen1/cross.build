@@ -38,12 +38,21 @@ export default subModule.directive('myprojects', () => {
                 }
             }
                                     
-            $scope.$watch(() => { return $scope.myprojects.length!=0; }, () => {
-                var params = $location.search();
-                if (params.pgid != null) {
-                    for (var i = 0; i < $scope.myprojects.length; i++) {
-                        if ($scope.myprojects[i].id==params.pgid) {
-                            $scope.select($scope.myprojects[i]);
+            $scope.$watch(() => { return ($scope.myprojects.length!=0); }, (oldValue, newValue) => {
+                if (newValue !== oldValue) {
+                    var params = $location.search();
+                    
+                    if (params.pgid != null) {
+                        var found=false;
+                        for (var i = 0; i < $scope.myprojects.length; i++) {
+                            if ($scope.myprojects[i].id==params.pgid && $scope.selectedProjectGroup==null) {
+                                $scope.select($scope.myprojects[i]);
+                                found=true;
+                                break;
+                            }
+                        }
+                        if (!found && $scope.selectedProjectGroup==null) {
+                            $location.search('pgid', null);
                         }
                     }
                 }

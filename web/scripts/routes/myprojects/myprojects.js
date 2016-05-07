@@ -34,8 +34,14 @@ export default /*@ngInject*/ ($scope, $state, $location, ProjectGroups, Notifica
 			ProjectGroups.delete($scope.selectedProjectGroup.id).success((data) => {
 				submit.removeClass("glyphicon-refresh glyphicon-refresh-animate");
 				Notification.success("Project deleted successfully.");
-				$location.search('pgid', null)
-				$state.go($state.current, {}, {reload: true});	
+				
+				/*$location.search('pgid', null);
+				$location.search('');
+				delete $location.$$search.pgid;
+				$location.$$compose();
+				$state.go($state.current, {}, {reload: true});*/
+				
+				$state.reload($state.current);
 			}).error((data, status) => {
 				$scope.pauseRefresh = false;
 				submit.removeClass("glyphicon-refresh glyphicon-refresh-animate");

@@ -107,10 +107,15 @@ export default subModule.directive('buildhistory', () => {
                                     $scope.openBuild(buildNum, false);
                                 }
                                 
-                                var txtId=$scope.buildJobs.get(buildNum).fullDisplayName.replace(' ', '');
-                                var txt = document.getElementById(txtId);
-                                var wraptxt = angular.element(txt);
-                                wraptxt.scrollTop(wraptxt[0].scrollHeight);
+                                //console.log($scope.buildJobs);
+                                //console.log(buildNum);
+                                var buildJob = $scope.buildJobs.get(buildNum);
+                                if (typeof buildJob!=='undefined') {
+                                    var txtId=buildJob.fullDisplayName.replace(' ', '');
+                                    var txt = document.getElementById(txtId);
+                                    var wraptxt = angular.element(txt);
+                                    wraptxt.scrollTop(wraptxt[0].scrollHeight);
+                                }
                                 
                             }).error((data, status) => {
                                 offset=0;

@@ -22,20 +22,20 @@ export default subModule.directive('buildhistory', () => {
             $scope.buildConsole = new Map();
             $scope.viewLog = new Map();
             
-            $scope.openBuild = (build, select) => {
+            $scope.openBuild = (buildNumber, select) => {
                 
                 if (select) {
-                    if (typeof $scope.selectedBuildJobs.get(build.number)==='undefined') {
-                        $scope.selectedBuildJobs.set(build.number, false);
+                    if (typeof $scope.selectedBuildJobs.get(buildNumber)==='undefined') {
+                        $scope.selectedBuildJobs.set(buildNumber, false);
                     }
-                    var current = $scope.selectedBuildJobs.get(build.number);
-                    $scope.selectedBuildJobs.set(build.number, !current);
+                    var current = $scope.selectedBuildJobs.get(buildNumber);
+                    $scope.selectedBuildJobs.set(buildNumber, !current);
                 }
                 
-                ProjectGroups.getBuildDetails($scope.selectedProjectGroup.id, $scope.status.name, build.number).success((data) => {
-                    $scope.buildJobs.set(build.number, data);
-                    if (build.number>$scope.latestBuildNumber) {
-                        $scope.latestBuildNumber = build.number;
+                ProjectGroups.getBuildDetails($scope.selectedProjectGroup.id, $scope.status.name, buildNumber).success((data) => {
+                    $scope.buildJobs.set(buildNumber, data);
+                    if (buildNumber>$scope.latestBuildNumber) {
+                        $scope.latestBuildNumber = buildNumber;
                         $scope.latestBuild=data;
                     }
                 });
@@ -47,6 +47,9 @@ export default subModule.directive('buildhistory', () => {
                 }
                 var current = $scope.viewLog.get(build.number);
                 $scope.viewLog.set(build.number, !current);
+                console.log(!current);
+                console.log($scope.selectedBuildJobs.get(build.number));
+                
                 ProjectGroups.getBuildConsole($scope.selectedProjectGroup.id, $scope.status.name, build.number).success((data) => {
                     $scope.buildConsole.set(parseInt(build.number), data);
                 });
@@ -54,7 +57,7 @@ export default subModule.directive('buildhistory', () => {
             
             $scope.initLast3 = () => {
                 for (var k = 0; k < $scope.status.builds.length && k<3; k++) {
-                    $scope.openBuild($scope.status.builds[k], false);
+                    $scope.openBuild($scope.status.builds[k].number, false);
                 }
             }
             
@@ -69,13 +72,12 @@ export default subModule.directive('buildhistory', () => {
                 if (!$scope.pauseRefresh) {
                     ProjectGroups.getStatus($scope.selectedProjectGroup.id, $scope.status.name).success((data) => {
                         
-                        
                         if (data.builds.length > numBuilds || ($scope.latestBuild!=null && $scope.latestBuild.building)) {
                             var buildNum = 0;
                             if (data.builds.length > numBuilds) {
                                 numBuilds=data.builds.length;
                                 $scope.status.builds.splice(0, 0, data.builds[0]);
-                                $scope.openBuild(data.builds[0], true);
+                                $scope.openBuild(data.builds[0].number, true);
                                 
                                 buildNum = parseInt(data.builds[0].number);
                             } else {
@@ -102,8 +104,14 @@ export default subModule.directive('buildhistory', () => {
                                 if (!moreData || moreData==null || $scope.pauseRefresh) {
                                     offset=0;
                                     $scope.latestBuild.building=false;
-                                    $scope.openBuild(buildNum, true);
+                                    $scope.openBuild(buildNum, false);
                                 }
+                                
+                                var txtId=$scope.buildJobs.get(buildNum).fullDisplayName.replace(' ', '');
+                                var txt = document.getElementById(txtId);
+                                var wraptxt = angular.element(txt);
+                                wraptxt.scrollTop(wraptxt[0].scrollHeight);
+                                
                             }).error((data, status) => {
                                 offset=0;
                                 $scope.latestBuild.building=false;
@@ -112,7 +120,7 @@ export default subModule.directive('buildhistory', () => {
                         }
                     });
                 }
-            }, 3000);
+            }, 5000);
             
             $scope.$on("$destroy",function(){
                 if (angular.isDefined($scope.refreshInterval)) {

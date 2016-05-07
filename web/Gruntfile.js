@@ -21,7 +21,7 @@ module.exports = function (grunt) {
                 options: {
                     middleware: function (connect) {
                         return [
-                            modRewrite(['^((?!\\.css|\\.js|\\.html|\\.eot|\\.svg|\\.ttf|\\.woff|\\.png|\\.jpg|\\.pdf|\\.jpeg).)*$ /index.html [L]']),
+                            modRewrite(['^((?!\\.css|\\.js|\\.html|\\.eot|\\.svg|\\.ttf|\\.woff|\\.png|\\.jpg|\\.gif|\\.pdf|\\.jpeg).)*$ /index.html [L]']),
                             livereload({port: 35730}),
                             connect.static(path.resolve('.tmp')),
                             connect.static(path.resolve('./'))

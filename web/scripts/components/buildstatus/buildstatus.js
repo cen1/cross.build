@@ -8,11 +8,11 @@ export default subModule.directive('buildstatus', () => {
         restrict: 'E',
         replace: true,
         scope: {
-            result: '='        
+            build: '='
         },
         template,
         controller: /*@ngInject*/ ($scope) => {
-        
+            
         }
     }
 });

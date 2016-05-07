@@ -31,7 +31,7 @@ export default subModule.directive('vmcard', () => {
                 c3.generate({
                 bindto: '#'+safeId,
                 size: {
-                    height:120
+                    height:200
                 },
                 data: {
                     x: 'x',

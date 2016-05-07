@@ -1,6 +1,6 @@
 /* GLOBAL */
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .glyphicon-refresh-animate {
@@ -22,15 +22,26 @@ body {
 }
 
 /* HEADER */
+header {
+    font-weight: 800;
+    color: white;
+}
+
+header h1 {
+    font-family: 'Dosis', sans-serif;
+    color: white;
+}
+
 #header-panel {
-	background-color: #3BB9FF;
-	height: 40px;
+	/*background-color: #3BB9FF;*/
+    background-image:url('images/stardust.png');
+	height: 80px;
 	margin-bottom: 10px;
 }
 
 #header-panel div {
-	height: 40px;
-	line-height: 40px;
+	height: 80px;
+	line-height: 80px;
 }
 
 #footer-panel {
@@ -55,6 +66,10 @@ body {
     width: 25px;
 }
 
+.vmcard-table {
+    width: 100%;
+}
+
 .vmcard-table td {
     padding: 3px;    
 }
@@ -66,15 +81,17 @@ body {
 }
 
 .FreeBSD {
-    background-color: #E77471;
-    color: white;
-    font-weight: bold;
+    background-color: #E77471 !important;
+    color: white !important;
 }
 
 .Ubuntu {
-    background-color: #F9966B;
-    color: white;
-    font-weight: bold;
+    background-color: #F9966B !important;
+    color: white !important;
+}
+
+.panel-title {
+    font-weight: 700 !important;
 }
 
 .c3 svg {

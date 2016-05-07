@@ -4,13 +4,13 @@
 			<form ng-submit="addnew()" role="form" name="addnewForm">
 				<div class="form-group">
 					<label for="addnew-name">Project name:</label>
-					<input type="text" style="width: 400px" ng-model="projectgroup.name" 
+					<input type="text" ng-model="projectgroup.name" 
 						class="form-control" id="addnew-name" name="name" ng-required="true"/>
 					<validator-messages form="addnewForm.name"></validator-messages>
 				</div>
 				<div class="form-group">
 					<label for="addnew-repourl">Repository URL:</label>
-					<input type="text" style="width: 400px" ng-model="projectgroup.repository" 
+					<input type="text" ng-model="projectgroup.repository" 
 						class="form-control" id="addnew-repourl" name="url" ng-required="true"/>
 						<validator-messages form="addnewForm.url"></validator-messages>
 				</div>
@@ -23,9 +23,11 @@
 				<div ng-repeat="project in projectgroup.projects">
 					<hr />
 					<ppcard project="project"></ppcard>
+					<br />
 					<button class="btn btn-danger" ng-click="removePlatform(project)" type="button">Remove</button>
 				</div>
 				<br />
+				<hr />
 				<div class="form-group">
 					<button class="btn btn-success" type="submit">
 						<span id="submit-addnew" class="glyphicon"></span> Submit    

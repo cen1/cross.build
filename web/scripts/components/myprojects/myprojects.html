@@ -1,43 +1,56 @@
 <div class="wrapper container-fluid">
 <div class="row" style="padding-bottom: 50px">
     <div class="col-xs-2">
-        <span class="label label-default" style="width: 100%; display: block">
-            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>My projects
-        </span>
-        <div class="btn-group-vertical" style="width: 100%">
-            <button ng-repeat="project in myprojects" type="button" class="btn" style="width: 100%" 
-                ng-click="select(project)" ng-class="selectedProjectGroup.id==project.id ? 'btn-info' : 'btn-default'">{{ project.name }}</button>    
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title">My Projects</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" ng-repeat="project in myprojects" ng-click="select(project)" 
+                        ng-class="selectedProjectGroup.id==project.id ? 'active' : ''"><a href="#">{{ project.name }}</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="col-xs-8" style="padding-left: 1em; padding-right: 1em">
         <div ng-if="selectedProjectGroup">
-            <span class="label label-default" style="width: 100%; display: block">Project builds</span>
-            <br />
-            <div class="row">
-                <div ng-repeat="status in projectStatus" class="col-xs-6 vmcard">
-                    <buildhistory status="status" selected-project-group="selectedProjectGroup" pause-refresh="pauseRefresh">                   
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title">Project platforms</h3>
                 </div>
-            </div>
-            <br />
-            <hr />
-            <span class="label label-default" style="width: 100%; display: block">Configure project</span>
-            <form ng-submit="updateProject()" role="form" name="formUpdate">
-                <div class="form-group">
-                    <label for="addnew-repourl">Repository URL:</label>
-                    <input type="text" style="width: 400px" ng-model="selectedProjectGroup.repository" 
-                        class="form-control" id="addnew-repourl" name="url" ng-required="true"/>
-                    <validator-messages form="formUpdate.url"></validator-messages>
-                    <div ng-repeat="project in selectedProjectGroup.projects">
-                        <hr />
-                        <ppcard project="project"></ppcard>
+                <div class="panel-body">
+                    <div class="row">
+                        <div ng-repeat="status in projectStatus" class="col-xs-6">
+                            <buildhistory status="status" selected-project-group="selectedProjectGroup" pause-refresh="pauseRefresh">                   
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-success" type="submit">
-                        <span id="submit-addnew" class="glyphicon"></span> Save    
-                    </button>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title">Configure project</h3>
                 </div>
-            </form>
+                <div class="panel-body">
+                    <form ng-submit="updateProject()" role="form" name="formUpdate">
+                        <div class="form-group">
+                            <label for="addnew-repourl">Repository URL:</label>
+                            <input type="text" style="width: 400px" ng-model="selectedProjectGroup.repository" 
+                                class="form-control" id="addnew-repourl" name="url" ng-required="true"/>
+                            <validator-messages form="formUpdate.url"></validator-messages>
+                            <div ng-repeat="project in selectedProjectGroup.projects">
+                                <hr />
+                                <ppcard project="project"></ppcard>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit">
+                                <span id="submit-addnew" class="glyphicon"></span> Save    
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <br />
         <br />
@@ -47,12 +60,18 @@
     </div>
     <div class="col-xs-2">
         <div ng-if="selectedProjectGroup">
-            <span class="label label-default" style="width: 100%; display: block">Actions</span>
-            <div class="btn-group-vertical" style="width: 100%">
-                <button type="button" class="btn btn-default" style="width: 100%" ng-click="deleteProject()">
-                    <span id="delete-project" class="glyphicon"></span> Delete project
-                </button>
-                <button type="button" class="btn btn-default" style="width: 100%" ng-click="buildNow()">Build now</button>  
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title">Project platforms</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="btn-group-vertical" style="width: 100%">
+                        <button type="button" class="btn btn-default" style="width: 100%" ng-click="deleteProject()">
+                            <span id="delete-project" class="glyphicon"></span> Delete project
+                        </button>
+                        <button type="button" class="btn btn-default" style="width: 100%" ng-click="buildNow()">Build now</button>  
+                    </div>
+                </div>
             </div>
         </div>
     </div>

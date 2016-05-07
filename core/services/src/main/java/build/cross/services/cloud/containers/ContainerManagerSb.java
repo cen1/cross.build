@@ -58,7 +58,7 @@ public class ContainerManagerSb extends CloudCommon implements ContainerManagerS
 			throw new ServiceException("No slaves avalible");
 		} else {
 			for (Object[] l : lhList) {
-				if ((Double)l[0] < EvaluateLoadTimerSb.DISK_TRESHOLD) {
+				if ((Double)l[1] < EvaluateLoadTimerSb.DISK_TRESHOLD) {
 					lh = em.find(LoadHistory.class, l[0]);
 					break;
 				}

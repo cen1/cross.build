@@ -69,6 +69,7 @@
 	<dependency>
 		<groupId>build.cross</groupId>
 		<artifactId>cross-build-models</artifactId>
+		<scope>provided</scope>
 	</dependency>
 	<dependency>
 		<groupId>build.cross</groupId>

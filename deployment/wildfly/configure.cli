@@ -1,0 +1,44 @@
+embed-server --server-config=standalone-full.xml
+
+# Add postgresql JDBC driver
+/subsystem=datasources/jdbc-driver=postgresql:add( \
+    driver-name=postgresql, \
+    driver-module-name=org.postgresql, \
+    driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource \
+)
+ 
+# Add a non-XA datasource
+data-source add \
+    --name=CrossBuildDS \
+    --jta=false \
+    --driver-name=postgresql \
+    --connection-url=jdbc:postgresql://localhost:5432/crossbuild \
+    --jndi-name=java:jboss/datasources/CrossBuildDS \
+    --user-name=crossbuild \
+    --password=crossbuild \
+    --check-valid-connection-sql="SELECT 1" \
+	--validate-on-match=false \
+    --background-validation=false \
+    --use-fast-fail=true
+data-source enable --name=CrossBuildDS
+
+#Add system properties
+/system-property=CLOUD_IDENTITY:add(value=EC2ID)
+/system-property=CLOUD_CREDENTIALS:add(value=EC2CRED)
+/system-property=CLOUD_REGION:add(value=eu-central-1)
+/system-property=CLOUD_INSTANCE_TYPE:add(value=t2.micro)
+/system-property=CROSSBUILD_SECURITY_GROUP:add(value=0.0.0.0/0)
+/system-property=JENKINS_API:add(value=http://172.17.0.4:8081)
+/system-property=JENKINS_USER:add(value=admin)
+/system-property=JENKINS_PASSWORD:add(value=admin)
+
+#Interfaces
+/interface=public/:write-attribute(name=inet-address,value=0.0.0.0)
+/interface=management/:write-attribute(name=inet-address,value=0.0.0.0)
+
+#KC
+/subsystem=security/security-domain=keycloak/:add
+/subsystem=security/security-domain=keycloak/authentication=classic/:add(login-modules=[{ "code" => "org.keycloak.adapters.jboss.KeycloakLoginModule","flag" => "required"}])
+/extension=org.keycloak.keycloak-adapter-subsystem/:add(module=org.keycloak.keycloak-adapter-subsystem)
+/subsystem=keycloak:add
+quit

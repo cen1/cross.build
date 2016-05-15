@@ -1,0 +1,1 @@
+bin/standalone.sh -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=crossbuild -Dkeycloak.migration.file=kcexport.json --server-config=standalone-full.xml

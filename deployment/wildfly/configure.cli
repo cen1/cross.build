@@ -23,6 +23,7 @@ data-source add \
 data-source enable --name=CrossBuildDS
 
 #Add system properties
+/system-property=CLOUD_PROVIDER:add(value=aws-ec2)
 /system-property=CLOUD_IDENTITY:add(value=EC2ID)
 /system-property=CLOUD_CREDENTIALS:add(value=EC2CRED)
 /system-property=CLOUD_REGION:add(value=eu-central-1)
@@ -31,6 +32,8 @@ data-source enable --name=CrossBuildDS
 /system-property=JENKINS_API:add(value=http://172.17.0.4:8081)
 /system-property=JENKINS_USER:add(value=admin)
 /system-property=JENKINS_PASSWORD:add(value=admin)
+/system-property=KC_REALM_PUBLIC_KEY:add(value=PUBKEY)
+/system-property=KC_AUTH_SERVER_URL:add(value=http://localhost:8080/auth)
 
 #Interfaces
 /interface=public/:write-attribute(name=inet-address,value=0.0.0.0)

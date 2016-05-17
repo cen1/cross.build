@@ -1,0 +1,13 @@
+embed-server --server-config=standalone.xml 
+
+/core-service=management/security-realm=UndertowRealm:add() 
+/core-service=management/security-realm=UndertowRealm/server-identity=ssl:add( \
+   keystore-path=keycloak.jks, \
+   keystore-password=changeit, \
+   key-password=changeit, \
+   keystore-relative-to=jboss.server.config.dir, \
+   alias=cross.build) 
+
+/subsystem=undertow/server=default-server/https-listener=default-https:add(socket-binding=https, security-realm=UndertowRealm)
+   
+quit

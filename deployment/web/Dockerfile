@@ -12,9 +12,14 @@ apt-get install -y nodejs
 RUN mkdir /var/www && cd /var/www && \
 git clone https://github.com/cen1/cross.build.git
 
-EXPOSE 3002
+EXPOSE 80
 
 WORKDIR /var/www/cross.build/web
 RUN npm install && npm install -g grunt-cli bower
 
-CMD ["grunt", "serve"]
+ENV APIURL http://localhost:8080/cross-build-rest/v1
+ENV ROOT http://localhost
+ENV KEYCLOAKURL http://localhost:8080/auth
+ENV KEYCLOAKKEY changeme
+
+CMD ["grunt", "serve", "-port", "80"]

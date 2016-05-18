@@ -5,6 +5,7 @@ import static com.google.common.collect.Iterables.getOnlyElement;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.jclouds.aws.ec2.compute.extensions.AWSEC2SecurityGroupExtension;
 import org.jclouds.compute.RunNodesException;
@@ -115,11 +117,11 @@ public class VmManagerSb extends CloudCommon implements VmManagerSbLocal {
 			NodeMetadata node = getOnlyElement(compute.createNodesInGroup(vmSettings.getGroupName(), 1, template));
 			logger.info("New node " + node.getId() + " " + concat(node.getPrivateAddresses(), node.getPublicAddresses())+" in group "+vmSettings.getGroupName());
 	
-			uploadFile(node, "bootstrap_" + vmSettings.getAmiId() + ".sh", true);
-			uploadFile(node, "init_" + vmSettings.getAmiId() + ".sh", true);
-			uploadFile(node, "loadmonitor_" + vmSettings.getAmiId() + ".sh", true);
-			uploadFile(node, "loadmonitor.zip", false);
-			uploadFile(node, "startmonitor.sh", true);
+			uploadFile(node, "bootstrap_" + vmSettings.getAmiId() + ".sh", true, false);
+			uploadFile(node, "init_" + vmSettings.getAmiId() + ".sh", true, false);
+			uploadFile(node, "loadmonitor_" + vmSettings.getAmiId() + ".sh", true, false);
+			uploadFile(node, "loadmonitor.zip", false, true);
+			uploadFile(node, "startmonitor.sh", true, false);
 			uploadContainerFile(node, vmSettings.getContainerFile());
 			
 			executeBootstrapScript(node, vmSettings);
@@ -286,20 +288,23 @@ public class VmManagerSb extends CloudCommon implements VmManagerSbLocal {
 		return keyPairApi.describeKeyPairsInRegion(CLOUD_REGION);
 	}
 
-	private void uploadFile(NodeMetadata node, String fname, boolean dos2unix) throws IOException {
+	private void uploadFile(NodeMetadata node, String fname, boolean dos2unix, boolean binary) throws IOException {
 
 		SshClient ssh = compute.getContext().utils().sshForNode().apply(node);
 		ClassLoader classLoader = getClass().getClassLoader();
 		logger.info(fname);
-		File file = new File(classLoader.getResource(fname).getFile());
-
-		if (dos2unix) {
-			String content = FileUtils.readFileToString(file);
-			FileUtils.writeStringToFile(file, content.replaceAll("\r\n", "\n"));
-		}
-
+		InputStream file = classLoader.getResourceAsStream(fname);
 		ssh.connect();
-		ssh.put(fname, Payloads.newPayload(file));
+		
+		if (!binary) {
+			String content = IOUtils.toString(file, "UTF-8"); 
+			if (dos2unix) {
+				content=content.replaceAll("\r\n", "\n");
+			}
+			ssh.put(fname, Payloads.newStringPayload(content));
+		} else {
+			ssh.put(fname,  Payloads.newInputStreamPayload(file));
+		}
 		ssh.disconnect();
 	}
 	
@@ -313,14 +318,14 @@ public class VmManagerSb extends CloudCommon implements VmManagerSbLocal {
 		
 		SshClient ssh = compute.getContext().utils().sshForNode().apply(node);
 		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource(fname).getFile());
+		InputStream file = classLoader.getResourceAsStream(fname);
 
-		String content = FileUtils.readFileToString(file);
+		String content = IOUtils.toString(file, "UTF-8");
 		content = content.replace("%PUBKEY%", kp.getPubMaterial());
-		FileUtils.writeStringToFile(file, content.replaceAll("\r\n", "\n"));
+		content = content.replaceAll("\r\n", "\n");
 		
 		ssh.connect();
-		ssh.put(fname, Payloads.newPayload(file));
+		ssh.put(fname, Payloads.newStringPayload(content));
 		ssh.disconnect();
 	}
 

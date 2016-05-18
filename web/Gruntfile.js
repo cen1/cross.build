@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         paths: paths,
         connect: {
             options: {
-                port: process.env['PORT'] || 3002,
+                port: grunt.option('port') || 3002,
                 hostname: '0.0.0.0'
             },
             livereload: {

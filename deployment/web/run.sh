@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run -p 80:80 --name crossbuild-web crossbuild-web
+docker run -p 3002:3002 -p 35730:35730 --name crossbuild-web crossbuild-web

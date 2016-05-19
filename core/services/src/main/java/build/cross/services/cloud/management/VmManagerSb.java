@@ -104,7 +104,7 @@ public class VmManagerSb extends CloudCommon implements VmManagerSbLocal {
 		return nmnodes;
 	}
 
-	@TransactionTimeout(1000)
+	@TransactionTimeout(3600)
 	@Override
 	public Vm createVm(VmSetting vmSettings) {
 

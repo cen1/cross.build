@@ -1,6 +1,5 @@
 *.class
 cross.build.properties
-core/rest/src/main/webapp/WEB-INF/keycloak.json
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

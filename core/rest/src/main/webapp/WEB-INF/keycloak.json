@@ -1,0 +1,8 @@
+{
+  "realm": "crossbuild",
+  "realm-public-key": "${KC_REALM_PUBLIC_KEY}",
+  "auth-server-url": "${KC_AUTH_SERVER_URL}",
+  "ssl-required": "none",
+  "resource": "crossbuild",
+  "public-client": true
+}

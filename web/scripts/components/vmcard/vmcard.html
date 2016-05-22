@@ -2,11 +2,11 @@
     <table class="vmcard-table">
         <tr>
             <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Os:</td>
-            <td>{{vm.vmSetting.platform.name}} {{vm.vmSetting.platform.version}} <img ng-src="/images/{{vm.vmSetting.platform.name}}.png" class="vmcard-icon"/></td>
+            <td>{{vm.vmSetting.platform.name}} {{vm.vmSetting.platform.version}} <img ng-src="/images/{{vm.vmSetting.platform.name | lowercase}}.png" class="vmcard-icon"/></td>
         </tr>
         <tr>
             <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Kernel:</td>
-            <td>{{vm.vmSetting.platform.kernel}} <img ng-src="/images/{{vm.vmSetting.platform.kernel}}.png" class="vmcard-icon"/></td>
+            <td>{{vm.vmSetting.platform.kernel}} <img ng-src="/images/{{vm.vmSetting.platform.kernel | lowercase}}.png" class="vmcard-icon"/></td>
         </tr>
         <tr>
             <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Arch:</td>
@@ -22,7 +22,7 @@
         </tr>
         <tr>
             <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">Provider:</td>
-            <td>{{vm.vmSetting.provider}} <img ng-src="/images/{{vm.vmSetting.provider}}.png" class="vmcard-icon"/></td>
+            <td>{{vm.vmSetting.provider}} <img ng-src="/images/{{vm.vmSetting.provider | lowercase}}.png" class="vmcard-icon"/></td>
         </tr>
         <tr>
             <td class="vmcard-lcol {{vm.vmSetting.platform.name}}">&nbsp</td>

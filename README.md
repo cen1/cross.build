@@ -46,9 +46,9 @@ Access Control"
    * Go to web folder and edit Dockerfile with correct Keycloak and API (core) url.Run build and run.sh. This will create container crossbuild-web.
 
 
-If WILDFLY (core) backend fails to start for whatever reason you should clean the following data in order for initial run to succeed:
-1. Truncate or re-import whole database
-2. Remove all global credentials from Jenkins
-3. Remove Keypairs, Security groups and any newly created virtual machines on Ec2.
+If WILDFLY (core) backend fails to start for whatever reason you should clean the following data in order for initial run to succeed:  
+1. Truncate or re-import whole database  
+2. Remove all global credentials from Jenkins  
+3. Remove Keypairs, Security groups and any newly created virtual machines on Ec2.  
 
 After these three things are reset to initial state you can try to re-run the backend again.

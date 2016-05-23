@@ -2,8 +2,8 @@
 
 Cross.Build is an open source project dedicated for building and testing of cross platform code written in compiled languages. It was design as a public service and with scalability in mind. You can try out the demo and read more about the project at http://cross.build.
 
-## Installation instrutions
-Docker files and deployment scripts are preliminary and will be improved over time.Especially some build time parameters need to be moved out of Dockerfiles to run parameters instead.
+## Installation instructions
+Docker files and deployment scripts are preliminary and will be improved over time.Especially some build time parameters need to be moved out of Dockerfiles to runtime parameters instead.
 All deployment Dockerfiles and scripts are in ./deployments folder which is also the working directory for the following instructions.
 
 1. POSTGRES

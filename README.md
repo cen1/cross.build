@@ -39,8 +39,9 @@ except:
 Access Control"
 
 4. WILDFLY (core)
+   * Accept FreeBSD licence agreement on AWS marketplace (no way to do this programatically): https://aws.amazon.com/marketplace/pp/B00KSS55FY/
    * Go to wildfly folder and modify configure.cli in regard to db datasource and env vars.
-   * Run build.sh and run.sh. YOu will get a new container named crossbuild-wildfly.
+   * Run build.sh and run.sh. You will get a new container named crossbuild-wildfly.
 
 5. WEB
    * Go to web folder and edit Dockerfile with correct Keycloak and API (core) url.Run build and run.sh. This will create container crossbuild-web.

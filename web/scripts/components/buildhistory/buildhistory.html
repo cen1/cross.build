@@ -3,7 +3,7 @@
         <h3 class="panel-title" style="display: inline-block">
             {{status.project.vmSetting.platform.name}} {{status.project.vmSetting.platform.version}} ({{status.project.vmSetting.platform.arch}})
         </h3>
-        <img ng-src="/images/{{status.project.vmSetting.platform.name}}.png" class="vmcard-icon"/>
+        <img ng-src="/images/{{status.project.vmSetting.platform.name | lowercase}}.png" class="vmcard-icon"/>
     </div>
     <div class="panel-body">
         <div>
@@ -23,12 +23,12 @@
             <div ng-show="selectedBuildJobs.get(build.number)">
                 <div class="panel-body">
                     <table class="table" style="width: 100%">
-                        <tr>
+                        <!--<tr>
                             <th>Result</th>
                             <td>
                                 <buildstatus result="buildJobs.get(build.number).result"></buildstatus>
                             </td>
-                        </tr>
+                        </tr>-->
                         <tr>
                             <th>Date and time</th>
                             <td>
